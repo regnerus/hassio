@@ -6,6 +6,8 @@
 !.gitignore
 !*.md
 
+.DS_Store
+
 # Ignore folders.
 .storage
 .cloud
