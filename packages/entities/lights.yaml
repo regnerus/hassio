@@ -1,0 +1,161 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      common: &common
+        package: "lights"
+      grouped: &grouped
+        hidden: true
+        homebridge_hidden: true
+
+    # light.livingroom_ceiling_light:
+    #   <<: *common
+    # light.master_bedroom_ceiling_light:
+    #   <<: *common
+    # ---
+    # Localization: Light Names
+    light.master_bedroom_bedside_lights:
+      friendly_name: "Nachtlampjes"
+      <<: *common
+    light.livingroom_floor_lamp:
+      friendly_name: "Staande Lamp"
+      <<: *common
+    light.study_desk_light:
+      friendly_name: "Bureaulamp"
+      <<: *common
+    light.christmas_tree:
+      friendly_name: "Kerstboom"
+      <<: *common
+
+  customize_glob:
+    light.livingroom_ceiling_light_*:
+      <<: *grouped
+    light.master_bedroom_ceiling_light_*:
+      <<: *grouped
+    light.master_bedroom_bedside_light_*:
+      <<: *grouped
+    # ---
+    # Localization: Light Names
+    light.*_ceiling_light*:
+      friendly_name: "Plafondlamp"
+      <<: *common
+
+light:
+  # - platform: group
+  #   name: Livingroom Ceiling Light
+  #   entities:
+  #     - light.livingroom_ceiling_light_1
+  #     - light.livingroom_ceiling_light_2
+  # - platform: group
+  #   name: Master Bedroom Ceiling Light
+  #   entities:
+  #     - light.master_bedroom_ceiling_light_1
+  #     - light.master_bedroom_ceiling_light_2
+  - platform: group
+    name: Master Bedroom Bedside Lights
+    entities:
+      - light.master_bedroom_bedside_light_1
+      - light.master_bedroom_bedside_light_2
+
+  - platform: mqtt
+    schema: json
+    name: Livingroom Ceiling Light
+    command_topic: "zigbee2mqtt/livingroom_ceiling_light/set"
+    state_topic: "zigbee2mqtt/livingroom_ceiling_light"
+    color_temp: true
+    brightness: true
+    rgb: false
+
+  - platform: mqtt
+    schema: json
+    name: Master Bedroom Ceiling Light
+    command_topic: "zigbee2mqtt/master_bedroom_ceiling_light/set"
+    state_topic: "zigbee2mqtt/master_bedroom_ceiling_light"
+    color_temp: true
+    brightness: true
+    rgb: false
+
+  # - platform: mqtt
+  #   schema: json
+  #   name: Master Bedroom Bedside Lights
+  #   command_topic: "zigbee2mqtt/master_bedroom_bedside_lights/set"
+  #   state_topic: "zigbee2mqtt/master_bedroom_bedside_lights"
+  #   color_temp: true
+  #   brightness: true
+  #   rgb: false
+  # - platform: "mqtt"
+  #   name: "ledstrip_rgb"
+  #   availability_topic: "zigbee2mqtt/bridge/state"
+  #   brightness: true
+  #   command_topic: "zigbee2mqtt/0x00124b001d433c3e/set"
+  #   schema: "json"
+  #   state_topic: "zigbee2mqtt/0x00124b001d433c3e"
+  #   xy: true
+  # - platform: "mqtt"
+  #   name: "ledstrip_white"
+  #   availability_topic: "zigbee2mqtt/bridge/state"
+  #   brightness: true
+  #   color_temp: true
+  #   command_topic: "zigbee2mqtt/0x00124b001d433c3e/white/set"
+  #   optimistic: true
+  #   schema: "json"
+
+yeelight:
+  devices:
+    192.168.5.11:
+      name: study_desk_light
+      transition: 1000
+      # model: lamp1
+      # use_music_mode: true
+      save_on_change: true
+
+switch:
+  - platform: circadian_lighting
+    name: hallway_circadian
+    sleep_entity: alarm_control_panel.alarm
+    sleep_state: armed_night
+    sleep_brightness: 1
+    sleep_colortemp: 1000
+    min_brightness: 10
+    lights_brightness:
+      - light.entrance_hall_ceiling_light
+      - light.landing_ceiling_light
+    lights_ct: 
+      - light.toilet_light
+  - platform: circadian_lighting
+    name: master_bedroom_circadian
+    min_brightness: 15
+    lights_ct: 
+      - light.master_bedroom_ceiling_light
+    lights_brightness:
+      - light.master_bedroom_bedside_lights
+  - platform: circadian_lighting
+    name: livingroom_circadian_1
+    max_brightness: 70
+    min_brightness: 10
+    lights_ct:
+      - light.livingroom_ceiling_light
+      - light.livingroom_cabinet_light
+  - platform: circadian_lighting
+    name: livingroom_circadian_2
+    max_brightness: 90
+    min_brightness: 20
+    # interval: 600
+    lights_ct:
+      - light.livingroom_table_light
+      - light.livingroom_floor_lamp
+  - platform: circadian_lighting
+    name: livingroom_circadian_3
+    # interval: 600
+    disable_brightness_adjust: true
+    max_brightness: 30
+    min_brightness: 5
+    lights_ct: 
+      - light.livingroom_cabinet_ledstrip
+
+group:
+  circadian_livingroom:
+    name: Circadian Livingroom
+    entities:
+      - switch.circadian_lighting_livingroom_circadian_1
+      - switch.circadian_lighting_livingroom_circadian_2
+      - switch.circadian_lighting_livingroom_circadian_3

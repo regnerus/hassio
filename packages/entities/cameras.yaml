@@ -1,0 +1,53 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      common: &common
+        package: "cameras"
+    # ---
+    # Localization: Camera Names
+    camera.rabbit_camera:
+      friendly_name: Konijnen Camera
+      <<: *common
+    camera.front_door_camera:
+      friendly_name: Voordeur Camera
+      <<: *common
+
+camera:
+  - platform: generic
+    name: Rabbit Camera
+    still_image_url: !secret camera1_still_url
+    stream_source: !secret camera1_url
+  - platform: generic
+    name: Front Door Camera
+    still_image_url: !secret camera2_still_url
+    stream_source: !secret camera2_url
+  - platform: mjpeg
+    name: Study Camera MJPEG
+    still_image_url: !secret camera3_still_url
+    mjpeg_url: !secret camera3_url_mjpeg
+  - platform: generic
+    name: Study Camera
+    still_image_url: !secret camera3_still_url
+    stream_source: !secret camera3_url
+
+switch:
+ platform: command_line
+ switches:
+   #Switch for Foscam Motion Detection
+    # camera_study_ir:
+    #   command_on: 'curl -k "http://192.168.5.32:81/camera_control.cgi?loginuse=admin&loginpas=oTrwhsNTSPabhGWN&param=14&value=0"'
+    #   command_off: 'curl -k "http://192.168.5.32:81/camera_control.cgi?loginuse=admin&loginpas=oTrwhsNTSPabhGWN&param=14&value=0"'
+    #   command_state: 'curl -k --silent "http://192.168.5.32:81/get_params.cgi?loginuse=admin&loginpas=oTrwhsNTSPabhGWN" | grep -oP "(?<=pirenable=).*?(?=;)"'
+    #   value_template: '{{ value == "1" }}'
+    camera_study_control_up:
+      command_on: 'curl -k "http://192.168.5.32:81/decoder_control.cgi?loginuse=admin&loginpas=oTrwhsNTSPabhGWN&command=0&onestep=1"'
+      command_off: 'curl -k "http://192.168.5.32:81/decoder_control.cgi?loginuse=admin&loginpas=oTrwhsNTSPabhGWN&command=0&onestep=1"'
+    camera_study_control_down:
+      command_on: 'curl -k "http://192.168.5.32:81/decoder_control.cgi?loginuse=admin&loginpas=oTrwhsNTSPabhGWN&command=2&onestep=1"'
+      command_off: 'curl -k "http://192.168.5.32:81/decoder_control.cgi?loginuse=admin&loginpas=oTrwhsNTSPabhGWN&command=2&onestep=1"'
+    camera_study_control_left:
+      command_on: 'curl -k "http://192.168.5.32:81/decoder_control.cgi?loginuse=admin&loginpas=oTrwhsNTSPabhGWN&command=6&onestep=1"'
+      command_off: 'curl -k "http://192.168.5.32:81/decoder_control.cgi?loginuse=admin&loginpas=oTrwhsNTSPabhGWN&command=6&onestep=1"'
+    camera_study_control_right:
+      command_on: 'curl -k "http://192.168.5.32:81/decoder_control.cgi?loginuse=admin&loginpas=oTrwhsNTSPabhGWN&command=4&onestep=1"'
+      command_off: 'curl -k "http://192.168.5.32:81/decoder_control.cgi?loginuse=admin&loginpas=oTrwhsNTSPabhGWN&command=4&onestep=1"'

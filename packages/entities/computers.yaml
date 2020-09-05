@@ -1,0 +1,137 @@
+binary_sensor:
+  - platform: mqtt
+    name: Ping Television
+    state_topic: "iotlink/workgroup/television/lwt"
+    value_template: "{{ value }}"
+    payload_on: "ON"
+    payload_off: "OFF"
+    device_class: "connectivity"
+    qos: 1
+  - platform: mqtt
+    name: Ping Hackintosh
+    state_topic: "iotlink/workgroup/desktop-qqon8ih/lwt"
+    value_template: "{{ value }}"
+    payload_on: "ON"
+    payload_off: "OFF"
+    device_class: "connectivity"
+    qos: 1
+
+sensor:
+  - platform: mqtt
+    name: "Television Idle Time"
+    state_topic: "iotlink/workgroup/television/windows-monitor/stats/idle-time/my_user"
+    unit_of_measurement: 'seconds'
+    icon: mdi:timer
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/television/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+  - platform: mqtt
+    name: "Hackintosh Idle Time"
+    state_topic: "iotlink/workgroup/desktop-qqon8ih/windows-monitor/stats/idle-time/my_user"
+    unit_of_measurement: 'seconds'
+    icon: mdi:timer
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/desktop-qqon8ih/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+  - platform: mqtt
+    name: "Television CPU Usage"
+    state_topic: "iotlink/workgroup/television/windows-monitor/stats/cpu"
+    unit_of_measurement: '%'
+    icon: mdi:speedometer
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/television/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+  - platform: mqtt
+    name: "Television RAM Usage"
+    state_topic: "iotlink/workgroup/television/windows-monitor/stats/memory/usage"
+    unit_of_measurement: '%'
+    icon: mdi:memory
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/television/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+  - platform: mqtt
+    name: "Television HDD Usage (C)"
+    state_topic: "iotlink/workgroup/television/windows-monitor/stats/hard-drive/c/drive-usage"
+    unit_of_measurement: '%'
+    icon: mdi:chart-donut
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/television/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+  - platform: mqtt
+    name: "Television HDD Usage (D)"
+    state_topic: "iotlink/workgroup/television/windows-monitor/stats/hard-drive/d/drive-usage"
+    unit_of_measurement: '%'
+    icon: mdi:chart-donut
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/television/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+  - platform: mqtt
+    name: "Television HDD Free Space (C)"
+    state_topic: "iotlink/workgroup/television/windows-monitor/stats/hard-drive/c/available-free-space"
+    unit_of_measurement: 'MB'
+    icon: mdi:harddisk
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/television/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+  - platform: mqtt
+    name: "Television HDD Free Space (D)"
+    state_topic: "iotlink/workgroup/television/windows-monitor/stats/hard-drive/d/available-free-space"
+    unit_of_measurement: 'MB'
+    icon: mdi:harddisk
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/television/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+camera:
+  - platform: mqtt
+    name: "Television Screen"
+    topic: "iotlink/workgroup/television/windows-monitor/stats/display/0/screen"
+
+switch:
+  - platform: wake_on_lan
+    name: WOL Hackintosh
+    broadcast_address: !secret hackintosh_ip
+    mac: !secret hackintosh_mac
+  - platform: wake_on_lan
+    name: WOL Hackintosh
+    broadcast_address: !secret hackintosh_ip
+    mac: !secret hackintosh_mac
+
+script:
+  television_reboot:
+    alias: "Television Reboot"
+    sequence:
+      - service: mqtt.publish
+        data:
+          topic: "iotlink/workgroup/television/commands/reboot"
+          payload: ""
+
+  television_open_plex:
+    alias: "Open Plex"
+    sequence:
+      - service: mqtt.publish
+        data:
+          topic: "iotlink/workgroup/television/commands/run"
+          payload: '{ "command": "C:\Program Files\Plex\Plex Media Player\PlexMediaPlayer.exe", "args": "--desktop --fullscreen", "path": "C:\Program Files\Plex\Plex Media Player\PlexMediaPlayer.exe", "user": "", "visible": true, "fallback": true }'

@@ -1,0 +1,23 @@
+---
+# Component: Scenes
+# We currently use scenes in three different rooms of the house.
+#
+#
+homeassistant:
+  customize:
+    package.node_anchors:
+      common: &common
+        package: "scenes"
+
+input_select: 
+  living_room_lighting_mode:
+    name: Verlichtingsmodus
+    icon: mdi:brightness-6
+    initial: "Dagelijks"
+    options:
+      - "Dagelijks"
+      - "Helder"
+      - "Romantisch"
+      - "Snoep"
+      # - "Zee"
+      - "Film"

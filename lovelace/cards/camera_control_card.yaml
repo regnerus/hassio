@@ -1,0 +1,78 @@
+# title: Camera
+# # anchors:
+# #   graph_commons: &graph_commons
+# #     height: 150
+# #     points_per_hour: 0.125
+# #     hours_to_show: 168
+# #     hour24: true
+# #     decimals: 1
+# #     show:
+# #       labels: true
+# #   sun_plot: &sun_plot
+# #     color: gray
+# #     entity: sensor.sun_up_numeric
+# #     name: Night
+# #     show_indicator: false
+# #     show_state: false
+# #     show_line: false
+# #     show_points: false
+# #     show_legend: false
+# #     y_axis: secondary
+# # large: true
+# card:
+#   type: custom:vertical-stack-in-card
+#   cards:
+#     - type: picture-glance
+#       image:
+#       camera_image: camera.study_camera_mjpeg
+#       title: "Camera"
+#       # camera_view: live
+#       entities:
+#         - light.study_ceiling_light
+#     - type: glance
+#       columns: 3
+#       title: Camera Control
+#       show_state: false
+#       entities:
+#         # top row
+
+#         - entity: binary_sensor.common
+#           icon: mdi:chevron-up-box-outline
+#           name: ' ' 
+#           tap_action:
+#             action: call-service
+#             service: remote.send_command
+#             service_data:
+#               "entity_id": "remote.joehubz"
+#               "device": "53209424"
+#               "command": "DirectionUp"
+#         - entity: binary_sensor.common
+#           icon: mdi:chevron-left-box-outline
+#           name: ' ' 
+#           tap_action:
+#             action: call-service
+#             service: remote.send_command
+#             service_data:
+#               "entity_id": "remote.joehubz"
+#               "device": "53209424"
+#               "command": "DirectionLeft"
+#         - entity: binary_sensor.common
+#           icon: mdi:chevron-down-box-outline
+#           name: ' ' 
+#           tap_action:
+#             action: call-service
+#             service: remote.send_command
+#             service_data:
+#               "entity_id": "remote.joehubz"
+#               "device": "53209424"
+#               "command": "DirectionDown"
+#         - entity: binary_sensor.common
+#           icon: mdi:chevron-right-box-outline
+#           name: ' ' 
+#           tap_action:
+#             action: call-service
+#             service: remote.send_command
+#             service_data:
+#               "entity_id": "remote.joehubz"
+#               "device": "53209424"
+#               "command": "DirectionRight"

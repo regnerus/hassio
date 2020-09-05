@@ -1,0 +1,10 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      common: &common
+        package: "batterysensors"
+
+  customize_glob:
+    sensor.*_battery:
+      # friendly_name: "Batterij"
+      <<: *common

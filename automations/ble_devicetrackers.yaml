@@ -1,0 +1,187 @@
+- alias: 'Set 0 Black Tracker Home'
+  initial_state: 'on'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.0_black_tracker
+      to: "on"
+  action:
+    service: device_tracker.see
+    data_template:
+      dev_id: ble_0_black_tracker
+      location_name: home
+- alias: 'Set 1 Brown Tracker Home'
+  initial_state: 'on'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.1_brown_tracker
+      to: "on"
+  action:
+    service: device_tracker.see
+    data_template:
+      dev_id: ble_1_brown_tracker
+      location_name: home
+- alias: 'Set 2 Red Tracker Home'
+  initial_state: 'on'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.2_red_tracker
+      to: "on"
+  action:
+    service: device_tracker.see
+    data_template:
+      dev_id: ble_2_red_tracker
+      location_name: home
+- alias: 'Set 3 Orange Tracker Home'
+  initial_state: 'on'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.3_orange_tracker
+      to: "on"
+  action:
+    service: device_tracker.see
+    data_template:
+      dev_id: ble_3_orange_tracker
+      location_name: home
+- alias: 'Set 4 Yellow Tracker Home'
+  initial_state: 'on'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.4_yellow_tracker
+      to: "on"
+  action:
+    service: device_tracker.see
+    data_template:
+      dev_id: ble_4_yellow_tracker
+      location_name: home
+
+
+- alias: 'Set 0 Black Tracker Not Home'
+  initial_state: 'on'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.0_black_tracker
+      from: "on"
+      to: "off"
+      for:
+        minutes: 5
+  action:
+    service: device_tracker.see
+    data_template:
+      dev_id: ble_0_black_tracker
+      location_name: not_home
+- alias: 'Set 1 Brown Tracker Not Home'
+  initial_state: 'on'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.1_brown_tracker
+      from: "on"
+      to: "off"
+      for:
+        minutes: 5
+  action:
+    service: device_tracker.see
+    data_template:
+      dev_id: ble_1_brown_tracker
+      location_name: not_home
+- alias: 'Set 2 Red Tracker Not Home'
+  initial_state: 'on'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.2_red_tracker
+      from: "on"
+      to: "off"
+      for:
+        minutes: 5
+  action:
+    service: device_tracker.see
+    data_template:
+      dev_id: ble_2_red_tracker
+      location_name: not_home
+- alias: 'Set 3 Orange Tracker Not Home'
+  initial_state: 'on'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.3_orange_tracker
+      from: "on"
+      to: "off"
+      for:
+        minutes: 5
+  action:
+    service: device_tracker.see
+    data_template:
+      dev_id: ble_3_orange_tracker
+      location_name: not_home
+- alias: 'Set 4 Yellow Tracker Not Home'
+  initial_state: 'on'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.4_yellow_tracker
+      from: "on"
+      to: "off"
+      for:
+        minutes: 5
+  action:
+    service: device_tracker.see
+    data_template:
+      dev_id: ble_4_yellow_tracker
+      location_name: not_home
+
+
+- alias: 'Set Combined Tracker Bouke'
+  initial_state: 'on'
+  trigger:
+    - platform: homeassistant
+      event: start
+    - platform: state
+      entity_id: binary_sensor.combined_tracker_bouke
+  action:
+    service: device_tracker.see
+    data_template:
+      dev_id: ble_combined_bouke
+      location_name: >
+        {% if is_state("binary_sensor.combined_tracker_bouke", "on") %}
+          home
+        {% else %}
+          not_home
+        {% endif %}       
+- alias: 'Set Combined Tracker Loes'
+  initial_state: 'on'
+  trigger:
+    - platform: homeassistant
+      event: start
+    - platform: state
+      entity_id: binary_sensor.combined_tracker_loes
+  action:
+    service: device_tracker.see
+    data_template:
+      dev_id: ble_combined_loes
+      location_name: >
+        {% if is_state("binary_sensor.combined_tracker_loes", "on") %}
+          home
+        {% else %}
+          not_home
+        {% endif %}  
+
+# - alias: 'Set Keys 2 Home'
+#   initial_state: 'on'
+#   trigger:
+#     platform: state
+#     entity_id: binary_sensor.presence_loes_keys
+#     to: "on"
+#   action:
+#     service: device_tracker.see
+#     data:
+#       dev_id: ble_keys_2
+#       location_name: 'home'
+
+# - alias: 'Set Keys 2 Not Home'
+#   initial_state: 'on'
+#   trigger:
+#     platform: state
+#     entity_id: binary_sensor.presence_loes_keys
+#     to: "off"
+#   action:
+#     service: device_tracker.see
+#     data:
+#       dev_id: ble_keys_2
+#       location_name: 'not_home'

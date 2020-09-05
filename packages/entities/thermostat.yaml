@@ -1,0 +1,37 @@
+input_select:
+  thermostat_target_sensor:
+    name: Thermostat target sensor
+    options:
+     - Livingroom
+     - Study
+    icon: mdi:radiator
+ 
+sensor:
+  - platform: template
+    sensors:
+      thermostat_target_sensor_template:
+        friendly_name: "Thermostat target sensor"
+        unit_of_measurement: "°C"
+        value_template: >-
+            {% if is_state('input_select.thermostat_target_sensor', 'Livingroom') %}
+                {{ states.sensor.downstairs_thermostat_temperature.state  | float }}
+            {% elif is_state('input_select.thermostat_target_sensor', 'Study') %}
+                {{ states.sensor.study_tempsensor_temperature.state  | float }}
+            {% endif %}
+
+climate:
+  - platform: generic_thermostat
+    name: Heater
+    heater:  climate.downstairs
+    target_sensor: sensor.thermostat_target_sensor_template
+    # min_temp: 55
+    # max_temp: 72
+    initial_hvac_mode: "off"
+    ac_mode: False
+    target_temp: 16.5
+    cold_tolerance: 1
+    hot_tolerance: 2
+    away_temp: 55
+    precision: 0.5
+    min_cycle_duration:
+      minutes: 5

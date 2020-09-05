@@ -1,0 +1,15 @@
+script: 
+  notify_oven:
+    sequence:
+      - service: script.sonos_play_sound
+        data:
+          sonos_entity: media_player.sonos_livingroom
+          volume: 0.5
+          sound: '/local/audio/blow.mp3'
+          delay: '00:00:01'
+      - service: script.sonos_play_sound
+        data:
+          sonos_entity: media_player.sonos_kitchen
+          volume: 0.5
+          sound: '/local/audio/blow.mp3'
+          delay: '00:00:15'

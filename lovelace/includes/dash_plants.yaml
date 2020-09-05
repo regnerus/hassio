@@ -1,0 +1,102 @@
+# lovelace_gen
+type: "custom:button-card"
+template: dash_button
+name: {{ name }}
+entity: {{ plant }}
+icon: {{ icon }}
+tap_action:
+  action: more-info
+hold_action:
+  action: toggle
+styles:
+  card:
+    - height: 100px
+    - background: >
+        [[[
+        if (entity.state == "problem") return "repeating-linear-gradient(45deg,var(--custom_plant_color),var(--custom_plant_color) 10px,var(--paper-card-background-color) 10px,var(--paper-card-background-color) 20px)";
+        else return "var(--paper-card-background-color)"; 
+        ]]]
+  # grid:
+  #   - position: relative
+  grid:
+    - grid-template-areas: '"n n" "temperature temperature" "moisture moisture" "conductivity conductivity"'
+    - grid-template-columns: 1fr 1fr
+    - grid-template-rows: 1fr min-content min-content min-content
+  custom_fields:
+    moisture:
+      - padding-bottom: 2px
+      - padding-left: 10px
+      - align-self: middle
+      - justify-self: start
+      # - --text-color-sensor: '[[[ if (states["sensor.raspi_cpu"].state > 80) return "red"; ]]]'
+    conductivity:
+      - padding-bottom: 2px
+      - padding-left: 10px
+      - align-self: middle
+      - justify-self: start
+      # - --text-color-sensor: '[[[ if (states["sensor.raspi_ram"].state > 80) return "red"; ]]]'
+    # brightness:
+    #   - padding-bottom: 2px
+    #   - align-self: middle
+    #   - justify-self: start
+      # - --text-color-sensor: '[[[ if (states["sensor.raspi_sd"].state > 80) return "red"; ]]]'
+    # moisture:
+    #   - position: absolute
+    #   - left: 4%
+    #   - top: 1%
+    temperature:
+      - padding-bottom: 2px
+      - padding-left: 10px
+      - align-self: middle
+      - justify-self: start
+
+custom_fields:
+  temperature: >
+    [[[
+      return `<ha-icon
+        icon="mdi:thermometer"
+        style="width: 16px; height: 16px; color: white;">
+        </ha-icon> <span style="color: white;">${states['{{ temperature }}'].state}°C</span>`
+    ]]]
+  moisture: >
+    [[[
+      return `<ha-icon
+        icon="mdi:water-percent"
+        style="width: 16px; height: 16px; color: white;">
+        </ha-icon> <span><span style="color: white;">${states['{{ moisture }}'].state}%</span></span>`
+    ]]]
+  conductivity: >
+    [[[
+      return `<ha-icon
+        icon="mdi:emoticon-poop"
+        style="width: 16px; height: 16px; color: white;">
+        </ha-icon> <span><span style="color: white;">${states['{{ conductivity }}'].state}µS/cm</span></span>`
+    ]]]
+  # brightness: >
+  #   [[[
+  #     return `<ha-icon
+  #       icon="mdi:harddisk"
+  #       style="width: 12px; height: 12px; color: deepskyblue;">
+  #       </ha-icon><span><span style="color: var(--text-color-sensor);">${states['{{ brightness }}'].state}lx</span></span>`
+  #   ]]]
+
+  # temperature: > 
+  #   [[[
+  #   if ('{{ temperature }}' !== '') return states['{{ temperature }}'].state + '°C';
+  #   else return "";
+  #   ]]]
+  # moisture: >
+  #   [[[ 
+  #   if (states['{{ media_player }}'].state == "playing") return '<ha-icon icon="mdi:volume-high" style="width: 18px; height: 18px; color: rgba(255,255,255,0.8);"></ha-icon>'; 
+  #   else return "";
+  #   ]]]
+  # furnace: >
+  #   [[[ 
+  #   if ('{{ light }}' == "light.kitchen_ceiling_light" && states['sensor.oven_state'].state == 'Verwarmen') return '<ha-icon icon="mdi:stove" style="width: 18px; height: 18px; color: rgba(255,255,255,0.8);"></ha-icon>'; 
+  #   if ('{{ light }}' == "light.kitchen_ceiling_light" && states['sensor.oven_state'].state == 'Standby') return '<ha-icon icon="mdi:stove" style="width: 18px; height: 18px; color: rgba(255,255,255,0.4);"></ha-icon>';
+  #   ]]]
+  # bed_people: >
+  #   [[[ 
+  #   if ('{{ light }}' == "light.schlafzimmer" && states['sensor.bed_people'].state == 1) return '<ha-icon icon="mdi:account" style="width: 18px; height: 18px; color: rgba(255,255,255,0.8);"></ha-icon>'; 
+  #   if ('{{ light }}' == "light.schlafzimmer" && states['sensor.bed_people'].state == 2) return '<ha-icon icon="mdi:account-multiple" style="width: 18px; height: 18px; color: rgba(255,255,255,0.8);"></ha-icon>';
+  #   ]]]

@@ -1,0 +1,302 @@
+media_player.livingroom_tv:
+  name: TV
+  expose: true
+  aliases:
+    - tv
+    - televisie
+    - television
+    - televisie woonkamer
+    - television living room
+  room: Woonkamer
+
+media_player.study_bluetooth_receiver:
+  name: Bluetooth Speakers
+  expose: true
+  aliases:
+    - Bluetooth Speakers
+    - Bluetooth Receiver
+    - Speakers
+  room: Studeerkamer
+
+light.livingroom_ceiling_light:
+  name: Plafond Lamp
+  expose: true
+  aliases:
+    - Plafond Lamp
+    - Plafonniere
+    - Ceiling Light
+  room: Woonkamer
+
+light.livingroom_floor_lamp:
+  name: Staande Lamp
+  expose: true
+  aliases:
+    - Staande Lamp
+    - Sta Lamp
+    - Vloer Lamp
+    - Floor Lamp
+  room: Woonkamer
+
+light.livingroom_table_light:
+  name: Tafellamp
+  expose: true
+  aliases:
+    - Tafellamp
+    - Tafel Lamp
+    - Table Lamp
+  room: Woonkamer
+
+light.livingroom_cabinet_light:
+  name: TV Lamp
+  expose: true
+  aliases:
+    - Televisie Lamp
+    - TV Meubel Lamp
+    - Cabinet Light
+  room: Woonkamer
+
+light.livingroom_cabinet_ledstrip:
+  name: LED Strip
+  expose: true
+  aliases:
+    - LED Strip
+    - TV Meubel LED Strip
+    - Cabinet LED Strip
+  room: Woonkamer
+
+light.master_bedroom_ceiling_light:
+  name: Plafond Lamp
+  expose: true
+  aliases:
+    - Plafond Lamp
+    - Plafonniere
+    - Ceiling Light
+  room: Slaapkamer
+
+light.master_bedroom_ledstrip:
+  name: LED Strip
+  expose: true
+  aliases:
+    - LED Strip
+    - LED Licht
+    - Bed Licht
+    - Bed Light
+  room: Slaapkamer
+
+light.master_bedroom_bedside_lights:
+  name: Nachtkast Lampen
+  expose: true
+  aliases:
+    - Nachtkast Lampen
+    - Nachtkastje Lampen
+    - Nacht Lampen
+    - Bedside Lights
+    - Night Lights
+  room: Slaapkamer
+
+light.garden_string_light:
+  name: Tuin Verlichting
+  expose: true
+  aliases:
+    - Tuin Lampen
+    - Tuin Lampjes
+    - Buiten Lampen
+    - Buiten Lampjes
+    - Garden Lights
+  room: Tuin
+
+light.kitchen_ceiling_light:
+  name: Keuken Verlichting
+  expose: true
+  aliases:
+    - Plafond Lamp
+    - Plafonniere
+    - Ceiling Light
+  room: Keuken
+
+light.study_ceiling_light:
+  name: Studeerkamer Verlichting
+  expose: true
+  aliases:
+    - Plafond Lamp
+    - Plafonniere
+    - Ceiling Light
+  room: Studeerkamer
+
+light.study_desk_light:
+  name: Bureaulamp
+  expose: true
+  aliases:
+    - Bureaulamp
+    - Desk Light
+    - Study Light
+  room: Studeerkamer
+
+switch.study_fluorescent_light:
+  name: TL Verlichting
+  expose: true
+  aliases:
+    - TL Verlichting
+    - TL Balk
+    - TL Lamp
+    - Fluorescent Light
+  room: Studeerkamer
+
+light.guest_bedroom_ceiling_light:
+  name: Logeerkamer Verlichting
+  expose: true
+  aliases:
+    - Plafond Lamp
+    - Plafonniere
+    - Ceiling Light
+  room: Logeerkamer
+
+light.guest_bedroom_mirror_light:
+  name: Makeup Spiegel
+  expose: true
+  aliases:
+    - Makeup Spiegel
+    - Spiegel
+    - Makeup Lamp
+    - Mirror
+    - Mirror Light
+  room: Logeerkamer
+
+light.entrance_hall_ceiling_light:
+  name: Gang Verlichting
+  expose: true
+  aliases:
+    - Plafond Lamp
+    - Plafonniere
+    - Ceiling Light
+  room: Gang
+
+light.utility_room_ceiling_light:
+  name: Bijkeuken Verlichting
+  expose: true
+  aliases:
+    - Plafond Lamp
+    - Plafonniere
+    - Ceiling Light
+  room: Bijkeuken
+
+light.kitchen_pantry_light:
+  name: Kelder Lamp
+  expose: true
+  aliases:
+    - Kelder Lamp
+    - Basement Light
+    - Pantry Light
+  room: Kelderkast
+
+light.landing_ceiling_light:
+  name: Overloop Verlichting
+  expose: true
+  aliases:
+    - Plafond Lamp
+    - Plafonniere
+    - Ceiling Light
+  room: Overloop
+
+light.porch_light:
+  name: Voordeur Verlichting
+  expose: true
+  aliases:
+    - Voordeur Verlichting
+    - Voordeur Lamp
+    - Porch Light
+  room: Gang
+
+script.scene_default: 
+  name: Dagelijks
+  expose: true
+  aliases:
+    - Dagelijkse Scene
+    - Default
+    - Dagelijkse Verlichting
+  room: Woonkamer
+
+script.scene_bright:
+  name: Helder
+  expose: true
+  aliases:
+    - Heldere Scene
+    - Bright
+    - Heldere Verlichting
+  room: Woonkamer
+
+script.scene_romantic:
+  name: Romantisch
+  expose: true
+  aliases:
+    - Romantisch Scene
+    - Romantisch
+    - Romantisch Verlichting
+  room: Woonkamer
+
+camera.rabbit_camera:
+  name: Konijnen Camera
+  expose: true
+  aliases:
+    - Konijnen Camera
+    - Bunny Camera
+    - Bunny Cam
+  room: Logeerkamer
+
+camera.front_door_camera:
+  name: Voordeur Camera
+  expose: true
+  aliases:
+    - Voordeur Camera
+    - Front Door Camera
+    - Porch Camera
+  room: Gang
+
+camera.study_camera:
+  name: Studeerkamer Camera
+  expose: true
+  aliases:
+    - Studeerkamer Camera
+    - Study Camera
+  room: Studeerkamer
+
+alarm_control_panel.alarm:
+  name: Alarm
+  expose: true
+  aliases:
+    - Alarm Paneel
+    - Alarm Panel
+  room: Woonkamer
+
+sensor.kitchen_temperature:
+  name: Temperatuur
+  expose: true
+  aliases:
+    - Keuken Temperatuur
+    - Kitchen Temperature
+  room: Keuken
+
+sensor.master_bedroom_temperature:
+  name: Temperatuur
+  expose: true
+  aliases:
+    - Slaapkamer Temperatuur
+    - Bedroom Temperature
+  room: Slaapkamer
+
+fan.master_bedroom_fan:
+    name: Ventilator
+    expose: true
+    aliases:
+      - Slaapkamer Ventilator
+      - Bedroom Ventilator
+    room: Slaapkamer
+
+fan.livingroom_fan:
+    name: Ventilator
+    expose: true
+    aliases:
+      - Woonkamer Ventilator
+      - Livingroom Ventilator
+    room: Woonkamer
+

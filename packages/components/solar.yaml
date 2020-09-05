@@ -1,0 +1,68 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      common: &common
+        package: "solar"
+
+    # ---
+    # Localization: Sensor Names
+    binary_sensor.sun_up:
+      friendly_name: Daglicht
+      icon: mdi:white-balance-sunny
+      <<: *common
+    binary_sensor.dark_inside:
+      friendly_name: Binnen Donker
+      <<: *common
+    sensor.indoor_illuminance:
+      friendly_name: Lichtsterkte
+      <<: *common
+    sensor.sunset_time:
+      icon: mdi:weather-sunset-down
+      friendly_name: "Zonsondergang"
+      <<: *common
+    sensor.sunrise_time:
+      icon: mdi:weather-sunset-up
+      friendly_name: "Zonsopgang"
+      <<: *common
+
+sensor:
+  - platform: min_max
+    name: indoor_illuminance
+    type: mean
+    entity_ids:
+      - sensor.kitchen_illuminance
+      - sensor.study_illuminance
+  - platform: template
+    sensors:
+      sunset_time:
+        value_template: '{% set timestamp = as_timestamp(states.sun.sun.attributes.next_setting) | timestamp_custom("%H:%M") %} {{ timestamp.lstrip("0") }}'
+      sunrise_time:
+        value_template: '{% set timestamp = as_timestamp(states.sun.sun.attributes.next_rising) | timestamp_custom("%H:%M") %} {{ timestamp.lstrip("0") }}' 
+      sun_up_numeric:
+        friendly_name: "Daglicht"
+        device_class: illuminance
+        value_template: >-
+          {% if is_state('binary_sensor.sun_up', 'on') %}
+            0.0
+          {% else %}
+            0.1
+          {% endif %}
+
+binary_sensor:
+  - platform: template
+    sensors:
+      sun_up:
+        device_class: light
+        value_template: >-
+          {{ states.sun.sun.attributes.elevation|float > -1
+             or states('sensor.indoor_illuminance')|float > 48}}
+      dark_inside:
+        device_class: light
+        value_template: >-
+          {{ is_state('binary_sensor.sun_up', 'off')
+             or states('sensor.indoor_illuminance')|float < 487}}
+      dim_inside:
+        device_class: light
+        value_template: >-
+          {{ is_state('binary_sensor.sun_up', 'off')
+             or states('sensor.indoor_illuminance')|float < 794}}

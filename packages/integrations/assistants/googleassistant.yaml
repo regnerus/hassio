@@ -1,0 +1,15 @@
+google_assistant:
+  project_id: home-assistant-24316
+  # client_id: !secret ga_client_id
+  # access_token: !secret ga_access_token
+  # agent_user_id: homeassistant
+  report_state: true
+  secure_devices_pin: !secret ga_pin
+  service_account: !include ../../../Home Assistant-c4c372afe12a.json
+  # api_key: !secret ga_api_key
+
+  expose_by_default: false
+
+  # Configuration for specific entities. Allows customization of names and types
+  # These are imported from another folder, to decouple them from the packages.
+  entity_config: !include ../../../assistants/google.yaml

@@ -1,0 +1,37 @@
+notify:
+  # - name: ga_broadcast
+  #   platform: rest
+  #   method: POST
+  #   resource: http://192.168.10.20:3000/assistant
+  #   data: 
+  #     user: "bouke"
+  - platform: html5
+    name: html5
+    vapid_pub_key: !secret vapid_public_key
+    vapid_prv_key: !secret vapid_private_key
+    vapid_email: !secret vapid_email
+  - name: notify_admin
+    platform: group
+    services:
+      - service: html5_bouke_macbook
+      - service: mobile_app_iphone_van_bouke
+  - name: notify_mobile
+    platform: group
+    services:
+      - service: mobile_app_ipad_van_loes
+      - service: mobile_app_loes_android
+      - service: mobile_app_iphone_van_bouke
+  - name: notify_static
+    platform: group
+    services:
+      - service: html5_bouke_macbook
+      - service: html5_television
+  - name: notify_all
+    platform: group
+    services:
+      - service: notify_mobile
+      - service: notify_static
+
+
+
+      

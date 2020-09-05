@@ -1,0 +1,11 @@
+    |
+    ha-card {
+        font-size: 20px;
+        primary-font-family: 'Open Sans,sans-serif'
+        height: 30px;
+        background: none;
+        margin-top: -0.9em;
+        margin-left: -14px;
+        margin-bottom: -0.9em;
+        box-shadow: none;
+    }

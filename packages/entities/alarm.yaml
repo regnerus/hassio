@@ -1,0 +1,79 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      common: &common
+        package: "alarm"
+
+alarm_control_panel:
+  - platform: manual
+    name: Alarm
+
+input_boolean:
+  emergency_mode:
+    name: Emergency Mode
+    initial: off
+    icon: mdi:alarm-light
+
+automation:
+- alias: 'enable_emergency_lights'
+  trigger:
+    platform: state
+    entity_id: input_boolean.emergency_mode
+    to: 'on'
+  action:
+    service: script.turn_on
+    entity_id: script.emergency_lights
+
+- alias: 'stop_emergency_lights'
+  trigger:
+    platform: state
+    entity_id: input_boolean.emergency_mode
+    to: 'off'
+  condition:
+    condition: state
+    entity_id: input_boolean.emergency_mode
+    state: 'off'
+  action:
+    service: script.turn_off
+    entity_id: script.emergency_lights
+
+script:
+  emergency_lights:
+    alias: Emergency Lights
+    sequence:
+      - alias: Light On
+        service: light.turn_on
+        data:
+          entity_id: light.porch_light
+          color_temp: 500
+          brightness: 255
+          transition: 0
+      - alias: Main Lights On
+        service: light.turn_on
+        data:
+          entity_id: group.main_lights
+          color_temp: 500
+          brightness: 255
+          transition: 0
+      - delay:
+          # time for flash light on
+          seconds: 1
+      - alias: Light Off
+        service: light.turn_off
+        data:
+          entity_id: light.porch_light
+      - alias: loop_emergency_lights
+        service: script.turn_on
+        data:
+          entity_id: script.loop_emergency_lights
+
+  loop_emergency_lights:
+    alias: Loop Emergency Lights
+    sequence:
+      - delay:
+          # time for flash light off
+          seconds: 1
+      - alias: loop_emergency_lights
+        service: script.turn_on
+        data:
+          entity_id: script.emergency_lights

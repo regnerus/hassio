@@ -1,0 +1,103 @@
+input_boolean:
+  alarm_clock_on:
+    name: Wekker
+    initial: off
+    icon: mdi:alarm
+  # Used by Automation to enable Snooze
+  alarm_clock_snooze:
+    name: Snoozing
+    initial: off
+    icon: mdi:alarm-snooze
+  # Used by Automation to track if alarm clock is running
+  alarm_clock_active:
+    name: Snoozing
+    initial: off
+    icon: mdi:alarm-snooze
+
+  alarm_clock_radio:
+    name: Alarm Radio
+    initial: on
+    icon: mdi:radio
+
+  alarm_clock_weekday:
+    name: Weekdays Only
+    initial: on
+    icon: mdi:calendar
+  alarm_clock_wakeup:
+    name: Natural Wakeup
+    initial: on
+    icon: mdi:theme-light-dark
+
+input_select:
+  # alarm_clock_time:
+  #   name: "Alarm Klok"
+  #   icon: mdi:alarm
+  #   initial: "07:30"
+  #   options:
+  #     - "05:30"
+  #     - "05:45"
+  #     - "06:00"
+  #     - "06:15"
+  #     - "06:30"
+  #     - "06:45"
+  #     - "07:00"
+  #     - "07:15"
+  #     - "07:30"
+  #     - "07:45"
+  #     - "08:00"
+  #     - "08:15"
+  #     - "08:30"
+  #     - "08:45"
+  #     - "09:00"
+  #     - "09:15"
+  #     - "09:30"
+  #     - "09:45"
+  #     - "10:00"
+  #     - "10:15"
+  #     - "10:30"
+  radio_station:
+    name: 'Selecteer Radio Station'
+    options:
+      - Radio 1
+      - Radio 2
+      - 3FM
+      - BNR Nieuwsradio
+      - Radio 10
+      - Radio 538
+      - Sky Radio
+      - Q-Music
+      - Veronica
+      - 100% NL
+      - Arrow Classic Rock
+      - Classic FM
+
+input_datetime:
+  # The Alarm Time input by the User
+  alarm_clock_time:
+    name: Alarm Time
+    has_date: false
+    has_time: true
+
+script:
+  radio_play:
+    alias: Play Radio on Master Bedroom Chromecast
+    sequence:
+      -  service: media_player.play_media
+         data_template:
+          entity_id: media_player.google_home_slaapkamer
+          media_content_type: "audio/mp3"
+          media_content_id: >
+            {% if is_state("input_select.radio_station", "Radio 1") %} http://icecast.omroep.nl/radio1-bb-mp3
+            {% elif is_state("input_select.radio_station", "Radio 2") %} http://icecast.omroep.nl/radio2-bb-mp3
+            {% elif is_state("input_select.radio_station", "3FM") %} http://icecast.omroep.nl/3fm-bb-mp3
+            {% elif is_state("input_select.radio_station", "BNR Nieuwsradio") %} http://icecast-bnr.cdp.triple-it.nl/bnr_mp3_96_03
+            {% elif is_state("input_select.radio_station", "Radio 10") %} http://19993.live.streamtheworld.com/RADIO10.mp3
+            {% elif is_state("input_select.radio_station", "Radio 538") %} http://18973.live.streamtheworld.com/RADIO538.mp3
+            {% elif is_state("input_select.radio_station", "Sky Radio") %} http://19993.live.streamtheworld.com:80/SKYRADIO_SC
+            {% elif is_state("input_select.radio_station", "Q-Music") %} http://icecast-qmusic.cdp.triple-it.nl/Qmusic_nl_live_96.mp3
+            {% elif is_state("input_select.radio_station", "Veronica") %} http://20043.live.streamtheworld.com:3690/VERONICA_SC
+            {% elif is_state("input_select.radio_station", "100% NL") %} http://stream.100p.nl/100pctnl.mp3
+            {% elif is_state("input_select.radio_station", "Arrow Classic Rock") %} http://91.221.151.155/listen.mp3
+            {% elif is_state("input_select.radio_station", "Classic FM") %} http://19143.live.streamtheworld.com/CLASSICFM_SC
+            {% endif %}
+            

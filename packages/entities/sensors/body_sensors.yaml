@@ -1,0 +1,108 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      common: &common
+        package: "bodysensors"
+      grouped: &grouped
+        hidden: true
+        homebridge_hidden: true
+
+    sensor.livingroom_bodysensor_group_illuminance:
+      <<: *common
+    binary_sensor.livingroom_bodysensor_group_occupancy:
+      <<: *common
+      friendly_name: Woonkamer Bodysensors
+      device_class: motion
+    binary_sensor.study_bodysensor_group_occupancy:
+      <<: *common
+      friendly_name: Studeerkamer Bodysensors
+      device_class: motion
+    binary_sensor.alarm_bodysensor_group_occupancy:
+      <<: *common
+      friendly_name: Alarm Bodysensors
+      device_class: motion
+    binary_sensor.study_bodysensor_cam_occupancy:
+      <<: *common
+      friendly_name: Studeerkamer Bodysensor Camera
+      device_class: motion
+    binary_sensor.porch_bodysensor_cam_occupancy:
+      <<: *common
+      friendly_name: Voordeur Bodysensor Camera
+      device_class: motion
+    binary_sensor.guest_bedroom_bodysensor_cam_occupancy:
+      <<: *common
+      friendly_name: Konijnen Bodysensor Camera
+      device_class: motion
+
+    binary_sensor.livingroom_bodysensor_1_occupancy:
+      <<: *grouped
+    binary_sensor.livingroom_bodysensor_2_occupancy:
+      <<: *grouped
+
+    # binary_sensor.study_bodysensor_cam_occupancy:
+    #   <<: *grouped
+    binary_sensor.study_bodysensor_1_occupancy:
+      <<: *grouped
+
+    sensor.livingroom_bodysensor_1_illuminance:
+      <<: *grouped
+    sensor.livingroom_bodysensor_2_illuminance:
+      <<: *grouped
+
+  customize_glob:
+    sensor.*_bodysensor*:
+      <<: *common
+    binary_sensor.*_bodysensor*:
+      <<: *common
+
+binary_sensor:
+  - platform: template
+    sensors:
+      livingroom_bodysensor_group_occupancy:
+        value_template: >-
+            {{ is_state('binary_sensor.livingroom_bodysensor_1_occupancy', 'on')
+               or is_state('binary_sensor.livingroom_bodysensor_2_occupancy', 'on') }}
+      study_bodysensor_group_occupancy:
+        value_template: >-
+            {{ is_state('binary_sensor.study_bodysensor_1_occupancy', 'on') }}
+      alarm_bodysensor_group_occupancy:
+        value_template: >-
+            {{ is_state('binary_sensor.livingroom_bodysensor_group_occupancy', 'on')
+               or is_state('binary_sensor.utility_room_bodysensor_1_occupancy', 'on')
+               or is_state('binary_sensor.kitchen_bodysensor_1_occupancy', 'on')
+               or is_state('binary_sensor.study_bodysensor_1_occupancy', 'on')
+               or (is_state('binary_sensor.guest_bedroom_bodysensor_1_occupancy', 'on') and is_state('input_boolean.guest_mode', 'off')) }}    
+      kitchen_group_occupancy:
+        value_template: >-
+            {{ is_state('binary_sensor.utility_room_bodysensor_1_occupancy', 'on')
+               or is_state('binary_sensor.kitchen_bodysensor_1_occupancy', 'on') }}
+  - platform: mqtt
+    name: garden_bodysensor_cam_occupancy
+    state_topic: "blueiris/alert/cam3"
+    payload_on: True
+    off_delay: 120
+    qos: 0
+    device_class: motion
+  - platform: mqtt
+    name: porch_bodysensor_cam_occupancy
+    state_topic: "blueiris/alert/cam2"
+    payload_on: True
+    off_delay: 120
+    qos: 0
+    device_class: motion
+  - platform: mqtt
+    name: guest_bedroom_bodysensor_cam_occupancy
+    state_topic: "blueiris/alert/cam1"
+    payload_on: True
+    off_delay: 120
+    qos: 0
+    device_class: motion
+
+sensor:
+  - platform: min_max
+    name: livingroom_bodysensor_group_illuminance
+    type: mean
+    entity_ids:
+      - sensor.livingroom_bodysensor_1_illuminance
+      - sensor.livingroom_bodysensor_2_illuminance
+      

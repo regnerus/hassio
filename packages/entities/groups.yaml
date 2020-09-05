@@ -1,0 +1,135 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      common: &common
+        package: "group"
+      
+    group.livingroom_lights:
+      friendly_name: "Woonkamer Verlichting"
+      <<: *common
+    group.master_bedroom_lights:
+      friendly_name: "Slaapkamer Verlichting"
+      <<: *common
+    group.master_bedroom_lights_all:
+      friendly_name: "Slaapkamer Verlichting incl. LED Strip"
+      <<: *common
+    group.study_lights:
+      friendly_name: "Studeerkamer Verlichting"
+      icon: 'mdi:desk-lamp'
+      <<: *common
+    group.hallway_lights:
+      friendly_name: "Hal Verlichting"
+      <<: *common
+    group.mirror_light:
+      friendly_name: "Spiegel Verlichting"
+      icon: mdi:tshirt-v
+      <<: *common
+
+group:
+  livingroom_lights:
+    name: Livingroom Lights
+    entities:
+      - light.livingroom_cabinet_light
+      - light.livingroom_cabinet_ledstrip
+      - light.livingroom_ceiling_light
+      - light.livingroom_floor_lamp
+      - light.livingroom_table_light
+  livingroom_colored_lights:
+    name: Livingroom Colored Lights
+    entities:
+      - light.livingroom_cabinet_ledstrip
+      - light.livingroom_floor_lamp
+      - light.christmas_tree
+  kitchen_lights:
+    name: Kitchen Lights
+    entities:
+      - light.kitchen_ceiling_light
+      - light.utility_room_ceiling_light
+  christmas_lights:
+    name: Christmas Lights
+    entities:
+      - light.christmas_tree
+      - light.christmas_ornament
+  porch_lights:
+    name: Porch Lights
+    entities:
+      - light.porch_christmas_lights
+      - light.porch_light
+  master_bedroom_lights:
+    name: Master Bedroom Lights
+    entities:
+      - light.master_bedroom_bedside_lights
+      - light.master_bedroom_ceiling_light
+  master_bedroom_accent_lights:
+    name: Master Bedroom Accent Lights
+    entities:
+      - light.master_bedroom_bedside_lights
+      - light.master_bedroom_ledstrip
+  master_bedroom_lights_all:
+    name: Master Bedroom Lights All
+    entities:
+      - group.master_bedroom_lights
+      - light.master_bedroom_ledstrip
+  study_lights:
+    name: Study Lights
+    entities:
+      - light.study_ceiling_light
+      - light.living_colors
+      - light.study_desk_light
+  hallway_lights:  
+    name: Hallway Lights
+    entities:
+      - light.entrance_hall_ceiling_light
+      - light.landing_ceiling_light
+  mirror_light:
+    name: Mirror
+    entities:
+      - switch.guest_bedroom_mirror_light
+      - light.guest_bedroom_closet_lights
+  main_lights: 
+    name: Main Lights
+    entities:
+      - group.livingroom_lights
+      - group.master_bedroom_lights
+      - group.hallway_lights
+      - light.study_ceiling_light
+      - light.guest_bedroom_ceiling_light
+      - light.kitchen_ceiling_light
+      - light.utility_room_ceiling_light
+  night_lights:
+    name: Night Lights
+    entities:
+      - light.entrance_hall_ceiling_light
+      - light.master_bedroom_ledstrip
+  door_sensors:
+    name: Doors
+    entities:
+      - binary_sensor.outside_door_group_contact
+      - binary_sensor.front_door_doorsensor_contact
+      - binary_sensor.livingroom_doorsensor_2_contact
+      - binary_sensor.livingroom_doorsensor_1_contact
+      - binary_sensor.kitchen_door_doorsensor_contact
+      - binary_sensor.kitchen_pantry_doorsensor_contact
+  body_sensors:
+    name: Motion
+    entities:
+      - binary_sensor.alarm_bodysensor_group_occupancy
+      - binary_sensor.livingroom_bodysensor_group_occupancy
+      - binary_sensor.entrance_hall_bodysensor_1_occupancy
+      - binary_sensor.kitchen_bodysensor_1_occupancy
+      - binary_sensor.utility_room_bodysensor_1_occupancy
+      - binary_sensor.landing_bodysensor_1_occupancy
+      - binary_sensor.guest_bedroom_bodysensor_1_occupancy
+      - binary_sensor.master_bedroom_bodysensor_1_occupancy
+  night_light_body_sensors:
+    name: Night Light Motion
+    entities:
+      - binary_sensor.entrance_hall_bodysensor_1_occupancy
+      - binary_sensor.landing_bodysensor_1_occupancy
+      - binary_sensor.master_bedroom_bodysensor_1_occupancy
+  all_persons:
+    name: All Persons
+    entities:
+      - person.bouke
+      - person.loes
+      

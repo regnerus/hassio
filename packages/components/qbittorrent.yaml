@@ -1,0 +1,23 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      common: &common
+        package: "qbit"
+
+    # ---
+    # Localization: Sensor Names
+    sensor.qbittorrent_down_speed:
+      friendly_name: Download Snelheid
+      <<: *common
+    sensor.sensor.qbittorrent_status:
+      friendly_name: Qbit Status
+      <<: *common
+    sensor.qbittorrent_up_speed:
+      friendly_name: Upload Snelheid
+      <<: *common   
+
+sensor:
+  - platform: qbittorrent
+    url: !secret qbit_url
+    username: !secret qbit_username
+    password: !secret qbit_password

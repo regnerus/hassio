@@ -1,0 +1,139 @@
+# icon: mdi:home-assistant
+title: System
+id: System
+popup_cards:
+  binary_sensor.bridge_state:
+    title: Zigbee
+    large: true
+    card:
+      type: custom:layout-card
+      layout: horizontal
+      max_columns: 2
+      style: !include ../includes/style_entities_popup.yaml
+      cards:
+        - type: entities
+          style: !include ../includes/style_entities_popup.yaml
+          entities:
+            - entity: binary_sensor.bridge_state
+              name: Bridge Status
+              icon: mdi:router-wireless
+            - type: custom:extended-entity-row
+              entity: binary_sensor.bridge_state
+              name: Firmware
+              icon: mdi:numeric
+              primary_info: [[ attributes.coordinator_firmware ]]
+              secondary_info: Zigbee2MQTT Version [[ attributes.version ]]
+            - entity: input_select.zigbee_log_level
+              icon: mdi:file-document-box
+              name: Log Level
+            - entity: switch.zigbee_permit_join
+              name: Aparaten toevoegen toestaan
+              
+        - type: custom:zigbee2mqtt-networkmap
+          entity: sensor.zigbee2mqtt_networkmap
+          style: !include ../includes/style_entities_popup_width.yaml
+          # the following are optional:
+          mqtt_base_topic: zigbee2mqtt # if you change base_topic of Zigbee2mqtt, change it accordingly
+          force: 500 # decrease it to get smaller map if you have many devices
+          node_size: 16
+          font_size: 12
+          link_width: 2
+          height: 400 # height of the card
+          # use this css config or use whatever css tech to change look and feel,
+          # the same variable can also be used in Home Assistant themes, see https://www.home-assistant.io/components/frontend/#defining-themes
+          css: |
+            :host {
+              --zigbee2mqtt-networkmap-node-color: rgba(18, 120, 98, .7);
+              --zigbee2mqtt-networkmap-node-fill-color: #dcfaf3;
+              --zigbee2mqtt-networkmap-node-pinned-color: rgba(190, 56, 93, .6);
+              --zigbee2mqtt-networkmap-link-color: rgba(18, 120, 98, .5);
+              --zigbee2mqtt-networkmap-hover-color: #be385d;
+              --zigbee2mqtt-networkmap-link-selected-color: rgba(202, 164, 85, .6);
+              --zigbee2mqtt-networkmap-label-color: #127862;
+              --zigbee2mqtt-networkmap-arrow-color: rgba(18, 120, 98, 0.7);
+              --zigbee2mqtt-networkmap-node-coordinator-color: rgba(224, 78, 93, .7);
+              --zigbee2mqtt-networkmap-node-router-color: rgba(0, 165, 255, .7);
+            }
+cards:
+  - type: entities
+    style: !include ../includes/style_entities_popup.yaml
+    entities:
+      - entity: binary_sensor.bridge_state
+        name: Bridge Status
+        icon: mdi:router-wireless
+  # - type: binary_sensor
+  #   name: Bridge Status
+  #   icon: mdi:router-wireless
+    
+
+  
+  # - type: custom:tracker-card
+  #   title:
+  #   trackers:
+  #     - sensor.custom_card_tracker
+  #     - sensor.custom_component_tracker
+  # - type: entities
+  #   title: Home Assistant
+  #   show_header_toggle: false
+  #   entities:
+  #   - type: script
+  #     entity: script.restart_hass
+  # - type: entities
+  #   title: Adguard
+  #   show_header_toggle: false
+  #   entities:
+  #   - type: switch
+  #     entity: switch.adguard_protection
+  #   - type: sensor
+  #     entity: sensor.adguard_average_processing_speed
+  #   - type: sensor
+  #     entity: sensor.adguard_dns_queries_blocked_ratio
+  #   - type: switch
+  #     entity: switch.adguard_filtering
+  #   - type: switch
+  #     entity: switch.adguard_safe_browsing
+  #   - type: switch
+  #     entity: switch.adguard_safe_search
+  # - type: entities
+  #   title: QBittorent
+  #   show_header_toggle: false
+  #   entities:
+  #   - type: sensor
+  #     entity: sensor.qbittorrent_status
+  #   - type: sensor
+  #     entity: sensor.qbittorrent_down_speed
+  #     icon: 'mdi:progress-download'
+  #   - type: sensor
+  #     entity: sensor.qbittorrent_up_speed
+  #     icon: 'mdi:progress-upload'
+  # - type: custom:auto-entities
+  #   show_empty: true
+  #   card:
+  #     type: entities
+  #     title: Batterijen
+  #   filter:
+  #     include:
+  #       - entity_id: "sensor.*_battery"
+  # - type: entities
+  #   title: Zigbee
+  #   show_header_toggle: false
+  #   entities:
+  #   - type: sensor
+  #     name: Bridge Status
+  #     icon: mdi:router-wireless
+  #     entity: binary_sensor.bridge_state
+  #   # - type: custom:extended-entity-row
+  #   #   entity: binary_sensor.bridge_state
+  #   #   name: Firmware
+  #   #   icon: mdi:numeric
+  #   #   primary_info: >-
+  #   #     [[ attributes.coordinator_firmware ]]
+  #   #   secondary_info: >-
+  #   #     Zigbee2MQTT Version [[ attributes.version ]]
+  #   - type: input_select
+  #     icon: mdi:file-document-box
+  #     name: Log Level
+  #     entity: input_select.zigbee_log_level
+  #   - type: sensor
+  #     name: Aparaten toevoegen toestaan
+  #     entity: switch.zigbee_permit_join

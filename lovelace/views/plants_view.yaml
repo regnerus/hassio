@@ -1,0 +1,45 @@
+title: Planten
+icon: mdi:heart
+badges: []
+# theme: slate
+cards:
+  - type: custom:flower-card
+    entity: plant.livi_senso_xiaom_miflo_avoca
+    species: "persea americana"
+
+  - type: horizontal-stack
+    cards:
+      - type: custom:mini-graph-card
+        entities:
+          - sensor.livi_senso_xiaom_miflo_avoca_moisture
+        line_color: red
+        # line_width: 8
+        decimals: 1
+        hour24: true
+        points_per_hour: 0.125
+        hours_to_show: 168
+        font_size: 75
+        lower_bound: 0
+        upper_bound: 70
+        color_thresholds:
+          - value: 15
+            color: green
+          - value: 60
+            color: red
+      - type: custom:mini-graph-card
+        entities:
+          - sensor.livi_senso_xiaom_miflo_avoca_conductivity
+        line_color: red
+        decimals: 1
+        hour24: true
+        points_per_hour: 0.125
+        hours_to_show: 168
+        # line_width: 8
+        font_size: 75
+        lower_bound: 10
+        upper_bound: 2500
+        color_thresholds:
+          - value: 350
+            color: green
+          - value: 2000
+            color: red

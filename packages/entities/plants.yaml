@@ -1,0 +1,195 @@
+---
+# Component: Plants
+# We currently have three plants with Xioami MiFlora sensors reporting their
+# status via the MiFlora MQTT Deamon.
+#
+# https://github.com/ThomDietrich/miflora-mqtt-daemon
+#
+homeassistant:
+  customize:
+    package.node_anchors:
+      common: &common
+        package: "plants"
+      mqtt: &mqtt
+        platform: mqtt
+        qos: 2
+      plant_moisture_common: &plant_moisture_common
+        value_template: '{{ value_json.moisture | int }}'
+        device_class: humidity
+        unit_of_measurement: '%'
+      plant_temperature_common: &plant_temperature_common
+        value_template: '{{ value_json.temperature | float }}'
+        device_class: temperature
+        unit_of_measurement: '°C'
+      plant_conductivity_common: &plant_conductivity_common
+        value_template: '{{ value_json.conductivity | int }}'
+        unit_of_measurement: 'µS/cm'
+        icon: mdi:spa
+      plant_illuminance_common: &plant_illuminance_common
+        value_template: '{{ value_json.light | int }}'
+        device_class: illuminance
+        unit_of_measurement: "lx"
+
+    # ---
+    # Localization: Plant Names
+    plant.plant_musa:
+      friendly_name: Bananenplant
+      <<: *common
+    plant.plant_dracaena:
+      friendly_name: Dracaena
+      <<: *common
+    plant.plant_jade:
+      friendly_name: Jade
+      <<: *common
+
+  customize_glob:
+  # ---
+  # Localization: Sensor Names
+    sensor.plant_*_moisture:
+      friendly_name: "Vochtigheid"
+      <<: *common
+    sensor.plant_*_temperature:
+      friendly_name: "Temperatuur"
+      <<: *common
+    sensor.plant_*_conductivity:
+      friendly_name: "Voeding"
+      <<: *common
+    sensor.plant_*_light_intensity:
+      friendly_name: "Licht Intensiteit"
+      <<: *common
+    sensor.plant_*_*_low:
+      <<: *common
+
+sensor:
+# ---
+# Sensors: Sunflower Plant
+  - name: plant_musa_moisture
+    state_topic: "homeassistant/sensor/sunflower/state"
+    <<: *mqtt
+    <<: *plant_moisture_common
+  - name: plant_musa_temperature
+    state_topic: "homeassistant/sensor/sunflower/state"
+    <<: *mqtt
+    <<: *plant_temperature_common
+  - name: plant_musa_conductivity
+    state_topic: "homeassistant/sensor/sunflower/state"
+    <<: *mqtt
+    <<: *plant_conductivity_common
+  - name: plant_musa_light_intensity
+    state_topic: "homeassistant/sensor/sunflower/state"
+    <<: *mqtt
+    <<: *plant_illuminance_common
+# ---
+# Sensors: Dracaena Plant
+  - name: plant_dracaena_moisture
+    state_topic: "homeassistant/sensor/dracaena/state"
+    <<: *mqtt
+    <<: *plant_moisture_common
+  - name: plant_dracaena_temperature
+    state_topic: "homeassistant/sensor/dracaena/state"
+    <<: *mqtt
+    <<: *plant_temperature_common
+  - name: plant_dracaena_conductivity
+    state_topic: "homeassistant/sensor/dracaena/state"
+    <<: *mqtt
+    <<: *plant_conductivity_common
+  - name: plant_dracaena_light_intensity
+    state_topic: "homeassistant/sensor/dracaena/state"
+    <<: *mqtt
+    <<: *plant_illuminance_common
+# ---
+# Sensors: Jade Plant
+  - name: plant_jade_moisture
+    state_topic: "homeassistant/sensor/jade/state"
+    <<: *mqtt
+    <<: *plant_moisture_common
+  - name: plant_jade_temperature
+    state_topic: "homeassistant/sensor/jade/state"
+    <<: *mqtt
+    <<: *plant_temperature_common
+  - name: plant_jade_conductivity
+    state_topic: "homeassistant/sensor/jade/state"
+    <<: *mqtt
+    <<: *plant_conductivity_common
+  - name: plant_jade_light_intensity
+    state_topic: "homeassistant/sensor/jade/state"
+    <<: *mqtt
+    <<: *plant_illuminance_common
+
+binary_sensor:
+  - platform: template
+    sensors:
+      plant_musa_moisture_low:
+        friendly_name: "Vochtigheid Laag"
+        device_class: moisture
+        value_template: "{{ states('sensor.plant_musa_moisture')|float < 15 }}"
+      plant_musa_conductivity_low:
+        friendly_name: "Voeding Laag"
+        # device_class: moisture
+        value_template: "{{ states('sensor.plant_musa_conductivity')|float < 350 }}"
+      plant_dracaena_moisture_low:
+        friendly_name: "Vochtigheid Laag"
+        device_class: moisture
+        value_template: "{{ states('sensor.plant_dracaena_moisture')|float < 15 }}"
+      plant_dracaena_conductivity_low:
+        friendly_name: "Voeding Laag"
+        # device_class: moisture
+        value_template: "{{ states('sensor.plant_dracaena_conductivity')|float < 350 }}"
+      plant_jade_moisture_low:
+        friendly_name: "Vochtigheid Laag"
+        device_class: moisture
+        value_template: "{{ states('sensor.plant_jade_moisture')|float < 15 }}"
+      plant_jade_conductivity_low:
+        friendly_name: "Voeding Laag"
+        # device_class: moisture
+        value_template: "{{ states('sensor.plant_jade_conductivity')|float < 50 }}"
+
+plant:
+# ---
+# Plant: Musa Plant
+  plant_musa:
+    sensors:
+      moisture: sensor.plant_musa_moisture
+      temperature: sensor.plant_musa_temperature
+      conductivity: sensor.plant_musa_conductivity
+      brightness: sensor.plant_musa_light_intensity
+    min_moisture: 15
+    max_moisture: 60
+    min_conductivity: 350
+    max_conductivity: 2000
+    min_brightness: 4000
+    max_brightness: 45000
+    min_temperature: 5
+    max_temperature: 35
+# ---
+# Plant: Dracaena Plant
+  plant_dracaena:
+    sensors:
+      moisture: sensor.plant_dracaena_moisture
+      temperature: sensor.plant_dracaena_temperature
+      conductivity: sensor.plant_dracaena_conductivity
+      brightness: sensor.plant_dracaena_light_intensity
+    min_moisture: 15
+    max_moisture: 60
+    min_conductivity: 350
+    max_conductivity: 2000
+    min_brightness: 1500
+    max_brightness: 6000
+    min_temperature: 10
+    max_temperature: 32
+# ---
+# Plant: Jade Plant
+  plant_jade:
+    sensors:
+      moisture: sensor.plant_jade_moisture
+      temperature: sensor.plant_jade_temperature
+      conductivity: sensor.plant_jade_conductivity
+      brightness: sensor.plant_jade_light_intensity
+    min_moisture: 15
+    max_moisture: 60
+    min_conductivity: 50
+    max_conductivity: 1000
+    min_brightness: 3000
+    max_brightness: 130000
+    min_temperature: 8
+    max_temperature: 35

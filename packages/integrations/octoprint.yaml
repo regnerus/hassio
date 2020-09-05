@@ -1,0 +1,14 @@
+octoprint:
+  host: 192.168.5.92
+  port: 443
+  api_key: !secret octoprint_api_key
+  name: Creality Ender 5
+  bed: true
+  number_of_tools: 1
+  sensors:
+    monitored_conditions:
+      - 'Current State'
+      - 'Job Percentage'
+      - 'Temperatures'
+      - 'Time Elapsed'
+      - 'Time Remaining'

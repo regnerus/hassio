@@ -1,0 +1,43 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      common: &common
+        package: "airquality"
+      co2_template_common: &co2_template_common
+        <<: *common
+        friendly_name: "Luchtkwaliteit"
+        custom_ui_state_card: custom-ui
+        icon_color: >
+          {% if (state === 'Ongezond') %} 
+            "#DA3F3D"
+          {%endif %}
+          {% if (state === 'Slecht') %} 
+            "#D96539"
+          {%endif %}
+          {% if (state === 'Matig') %} 
+            "#EFA951"
+          {%endif %}
+          {% if (state === 'Goed') %} 
+            "#87BD4A"
+          {%endif %}
+          {% if (state === 'Uitstekend') %} 
+            "#3FAA4C"
+          {%endif %}
+          # if (state === 'Slecht') return '#D96539';
+          # if (state === 'Matig') return '#EFA951';
+          # if (state === 'Goed') return '#87BD4A';
+          # if (state === 'Uitstekend') return '#3FAA4C';
+
+    # ---
+    # Localization: Sensor Names
+    sensor.livingroom_iaq:
+      <<: *co2_template_common
+    sensor.master_bedroom_iaq:
+      <<: *co2_template_common
+
+group:
+  iaq:
+    name: IAQ
+    entities:
+      - sensor.livingroom_iaq
+      - sensor.master_bedroom_iaq

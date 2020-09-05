@@ -1,0 +1,70 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      common: &common
+        package: "tempsensors"
+      hidden: &hidden
+        hidden: true
+        homebridge_hidden: true
+
+    sensor.fridge_temperature_mean:
+      <<: *common
+      friendly_name: Koelkast Temperatuur
+      icon: mdi:fridge
+    binary_sensor.fridge_status:
+      <<: *common
+
+    # ---
+    # Hide fridge sensors
+    sensor.fridge_tempsensor_temperature:
+      <<: *hidden
+    sensor.fridge_tempsensor_pressure:
+      <<: *hidden
+
+  customize_glob:
+    sensor.*_tempsensor*:
+      <<: *common
+    # ---
+    # Localization: Sensor Names
+    sensor.*_tempsensor*_pressure:
+      friendly_name: Luchtdruk
+    sensor.*_tempsensor*_humidity:
+      friendly_name: Luchtvochtigheid
+    sensor.*_tempsensor*_temperature:
+      friendly_name: Temperatuur
+    
+sensor:
+  - platform: statistics
+    name: Fridge Temperature Mean
+    entity_id: sensor.fridge_tempsensor_temperature
+    sampling_size: 50
+    precision: 1
+    max_age:
+      minutes: 90
+
+binary_sensor:
+  - platform: template
+    sensors:
+      fridge_status:
+        friendly_name: "Koelkast"
+        device_class: cold
+        value_template: "{{ states('sensor.fridge_temperature_mean')|float >= 3 and states('sensor.fridge_tempsensor_temperature')|float <= 5.5 }}"
+
+# sensor:
+#   - platform: min_max
+#     name: house_pressure
+#     type: mean
+#     # device_class: pressure
+#     # unit_of_measurement: hPa
+#     entity_ids:
+#       - sensor.0x00158d000271a770_pressure
+#       - sensor.0x00158d000272e455_pressure
+#       - sensor.0x00158d000272e49f_pressure
+#   - platform: statistics
+#     name: house_pressure_stats
+#     # device_class: pressure
+#     entity_id: sensor.house_pressure
+#     sampling_size: 50
+#     max_age:
+#       minutes: 120
+#     precision: 2

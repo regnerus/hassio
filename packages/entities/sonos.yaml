@@ -1,0 +1,61 @@
+script:
+  sonos_say:
+    alias: "Sonos TTS script"
+    sequence:
+      - service: sonos.snapshot
+        entity_id: 
+          - media_player.livingroom_sonos_music
+          - media_player.sonos_kitchen
+      - service: sonos.unjoin
+        entity_id: 
+          - media_player.livingroom_sonos_music
+          - media_player.sonos_kitchen
+      - service: media_player.volume_set
+        entity_id: 
+          - media_player.livingroom_sonos_music
+          - media_player.sonos_kitchen
+        data_template:
+          volume_level: "{{ volume }}"
+      - service: tts.google_say
+        entity_id: 
+          - media_player.livingroom_sonos_music
+          - media_player.sonos_kitchen
+        data_template:
+          message: "{{ message }}"
+      - delay: '00:00:01'
+      - delay: >-
+          {% set duration = states.media_player.livingroom_sonos_music.attributes.media_duration %}
+          {% if duration > 0 %}
+            {% set duration = duration - 1 %}
+          {% endif %}
+          {% set seconds = duration % 60 %}
+          {% set minutes = (duration / 60)|int % 60 %}
+          {% set hours = (duration / 3600)|int %}
+          {{ [hours, minutes, seconds]|join(':') }}
+      - service: sonos.restore
+        entity_id: 
+          - media_player.livingroom_sonos_music
+          - media_player.sonos_kitchen
+# script:
+#   sonos_play_sound: 
+#     alias: "Sonos Play Sound"
+#     sequence:
+#      - service: sonos.snapshot
+#        data_template:
+#          entity_id: "{{ sonos_entity }}"
+#      - service: sonos.unjoin
+#        data_template:
+#          entity_id: "{{ sonos_entity }}"
+#      - service: media_player.volume_set
+#        data_template:
+#          entity_id: "{{ sonos_entity }}"
+#          volume_level: "{{ volume }}"
+#      - service: media_player.play_media
+#        data_template:
+#          entity_id: "{{ sonos_entity }}"
+#          media_content_id: "{{ sound }}"
+#          media_content_type: music
+#      - delay: "{{ delay }}"
+#      - service: sonos.restore
+#        data_template:
+#          entity_id: "{{ sonos_entity }}"

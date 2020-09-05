@@ -1,0 +1,47 @@
+- url: /hacsfiles/lovelace-card-tools/card-tools.js
+  type: js
+- url: /hacsfiles/lovelace-auto-entities/auto-entities.js
+  type: js
+- url: /hacsfiles/vertical-stack-in-card/vertical-stack-in-card.js
+  type: js
+- url: /hacsfiles/secondaryinfo-entity-row/secondaryinfo-entity-row.js
+  type: js
+- url: /local/custom_plugin/alarm_control_panel-card.js
+  type: js
+- url: /hacsfiles/rgb-light-card/card.js
+  type: js
+
+- url: /hacsfiles/lovelace-card-mod/card-mod.js
+  type: module
+- url: /local/custom_plugin/simple-weather-card.js
+  type: module
+- url: /hacsfiles/mini-media-player/mini-media-player.js
+  type: module
+- url: /hacsfiles/mini-graph-card/mini-graph-card-bundle.js
+  type: module
+- url: /hacsfiles/extended-entity-row/extended-entity-row.js
+  type: module
+- url: /hacsfiles/custom-header/custom-header.js
+  type: module
+- url: /hacsfiles/lovelace-battery-entity/battery-entity.js
+  type: module
+- url: /hacsfiles/simple-thermostat/simple-thermostat.js
+  type: module
+- url: /hacsfiles/popup-backdrop-filter/popup-backdrop-filter.js
+  type: module
+- url: /hacsfiles/button-card/button-card.js
+  type: module
+- url: /hacsfiles/lovelace-layout-card/layout-card.js
+  type: module
+- url: /hacsfiles/zigbee2mqtt-networkmap/zigbee2mqtt-networkmap.js
+  type: module
+- url: /hacsfiles/lovelace-time-picker-card/time-picker-card.js
+  type: module
+
+# - url: /local/hui-view-settings.js
+#   type: js
+# - url: /local/popup-background.js
+#   type: js
+
+- url: 'https://fonts.googleapis.com/css?family=Open+Sans'
+  type: css

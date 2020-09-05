@@ -1,0 +1,13 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      common: &common
+        package: "weather"
+
+    weather.dark_sky:
+      <<: *common
+
+weather:
+  - platform: darksky
+    api_key: !secret darksky_api_key
+    mode: daily

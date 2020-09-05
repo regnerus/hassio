@@ -1,0 +1,46 @@
+switch:
+  - platform: mqtt
+    name: Zigbee Permit Join
+    icon: mdi:cellphone-wireless
+    state_topic: "zigbee2mqtt/bridge/config"
+    command_topic: "zigbee2mqtt/bridge/config/permit_join"
+    availability_topic: "zigbee2mqtt/bridge/state"
+    value_template: "{{ value_json.permit_join }}"
+    payload_on: "true"
+    payload_off: "false"
+    state_on: true
+    state_off: false
+    payload_available: "online"
+    payload_not_available: "offline"
+    optimistic: false
+    qos: 2
+    retain: true
+
+binary_sensor:
+  - platform: mqtt
+    name: Bridge state
+    device_class: connectivity
+    state_topic: "zigbee2mqtt/bridge/state"
+    payload_on: "online"
+    payload_off: "offline"
+    json_attributes_topic: "zigbee2mqtt/bridge/config"
+
+input_select:
+  zigbee_log_level:
+    name: 'Log Level'
+    initial: "warn"
+    options:
+      - debug
+      - info
+      - warn
+      - error
+
+sensor:
+  - platform: mqtt
+    name: Zigbee2mqtt Networkmap
+    # if you change base_topic of Zigbee2mqtt, change state_topic accordingly
+    state_topic: zigbee2mqtt/bridge/networkmap/raw
+    value_template: >-
+      {{ now().strftime('%Y-%m-%d %H:%M:%S') }}
+    # again, if you change base_topic of Zigbee2mqtt, change json_attributes_topic accordingly
+    json_attributes_topic: zigbee2mqtt/bridge/networkmap/raw

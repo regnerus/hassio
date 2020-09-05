@@ -1,0 +1,78 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      common: &common
+        package: "power"
+
+    sensor.washingmachine_state:
+      <<: *common
+    sensor.oven_state:
+      <<: *common
+  
+  customize_glob:
+    sensor.*_usage_cost:
+      icon: mdi:currency-eur
+      friendly_name: Energie Verbruik/Kosten
+      <<: *common
+
+sensor:
+# ---
+# Sensor: Washing Machine
+  - platform: statistics
+    name: washingmachine_stats
+    entity_id: sensor.washingmachine_power
+    sampling_size: 10
+    max_age:
+      minutes: 5
+  - platform: template
+    sensors:
+      washingmachine_state:
+        friendly_name: Wasmachine
+        icon_template: mdi:washing-machine
+        value_template: >-
+          {% if states('sensor.washingmachine_stats_mean')|float <= 1.0 %}
+            off
+          {% elif states('sensor.washingmachine_stats_mean')|float <= 50.0 %}
+            Standby
+          {% elif states('sensor.washingmachine_stats_mean')|float <= 150.0 %}
+            Wassen
+          {% elif states('sensor.washingmachine_stats_mean')|float <= 400.0 %}
+            Centrifugeren
+          {% elif states('sensor.washingmachine_stats_mean')|float > 400.0 %}
+            Verwarmen
+          {% else %}
+            Failed
+          {% endif %}
+      washingmachine_usage_cost:
+        friendly_name: "Wasmachine/Koelkast Gebruik"
+        unit_of_measurement: '€'
+        value_template: "{{ states('sensor.washingmachine_total_daily_energy')|float * 0.22 }}"
+# ---
+# Sensor: Furnace
+  - platform: template
+    sensors:
+      oven_state:
+        friendly_name: Oven
+        icon_template: mdi:stove
+        value_template: >-
+          {% if states('sensor.furnace_power')|float <= 1.0%}
+            off
+          {% elif states('sensor.furnace_power')|float < 20.0 %}
+            Standby
+          {% elif states('sensor.furnace_power')|float >= 20.0 %}
+            Verwarmen
+          {% else %}
+            Failed
+          {% endif %}
+      oven_usage_cost:
+        friendly_name: "Oven Gebruik"
+        unit_of_measurement: '€'
+        value_template: "{{ states('sensor.furnace_total_daily_energy')|float * 0.22 }}"
+# ---
+# Sensor: 3D Printer 
+  - platform: template
+    sensors:
+      3d_printer_usage_cost:
+        friendly_name: "3D Printer Gebruik"
+        unit_of_measurement: '€'
+        value_template: "{{ states('sensor.3d_printer_total_daily_energy')|float * 0.22 }}"

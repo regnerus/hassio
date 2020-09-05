@@ -1,0 +1,48 @@
+light:
+  ha-card-box-shadow: "0px 0px 0px 0px"
+  ha-card-border-radius: "3px"
+
+  # Fonts
+  primary-font-family: 'Raleway,sans-serif'
+  paper-font-common-base_-_font-family: "var(--primary-font-family)"
+  paper-font-common-code_-_font-family: "var(--primary-font-family)"
+  paper-font-body1_-_font-family: "var(--primary-font-family)"
+  paper-font-subhead_-_font-family: "var(--primary-font-family)"
+  paper-font-headline_-_font-family: "var(--primary-font-family)"
+  paper-font-caption_-_font-family: "var(--primary-font-family)"
+  paper-font-title_-_font-family: "var(--primary-font-family)"
+
+  background-color: "#eaeef9"
+  primary-background-color: "#eaeef9"
+  text-primary-color: '#FFF'
+  primary-color: "var(--accent-color)"
+  secondary-text-color: "#132328"
+  text-light-color: '#132328' 
+  text-medium-color: '#132328'
+  paper-item-icon-color: 'var(--text-light-color)'  
+
+  paper-card-background-color: 'rgba(255, 255, 255, 1)' 
+  card-background-color: 'var(--paper-card-background-color)'
+  accent-color: '#2c75f7' 
+  accent-medium-color: 'var(--accent-color)' 
+  paper-toggle-button-checked-bar-color: 'var(--accent-color)' 
+  paper-item-icon-active-color: 'var(--accent-color)'   
+  border-color: '#e8f2fe'
+  light-primary-color: '#e6e3ff' 
+
+  # Sliders
+  paper-slider-knob-color: 'var(--accent-color)'
+  paper-slider-pin-color: 'var(--accent-color)'
+  paper-slider-active-color: 'var(--accent-color)'
+
+  # Popups
+  paper-dialog-background-color: 'rgba(255,255,255,0.8)'
+
+  # Custom
+  custom_cch_background: 'rgba(255, 255, 255, 0.8)'
+  custom_heading: '#000000'
+  custom_icon_light: '#ffffff'
+  custom_icon_dark: '#222222'
+  custom_card_background: '#ffffff'
+  custom_motion_off: 'rgba(255,102,102,0.5)'
+  custom_motion_detected: 'rgba(99,86,215,1)'

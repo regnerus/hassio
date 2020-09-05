@@ -1,0 +1,21 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      common: &common
+        package: "doorbell"
+
+    # ---
+    # Localization: Sensor Names
+    sensor.doorbell_history:
+      friendly_name: Deurbel
+      icon: mdi:bell-ring
+      <<: *common
+    
+sensor:
+  - platform: history_stats
+    name: doorbell_history
+    entity_id: binary_sensor.doorbell_button
+    state: 'on'
+    type: count
+    start: '{{ now().replace(hour=0, minute=0, second=0) }}'
+    end: '{{ now() }}'

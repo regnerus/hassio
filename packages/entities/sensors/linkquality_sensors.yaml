@@ -1,0 +1,14 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      common: &common
+        package: "linkquality"
+      hidden: &hidden
+        hidden: true
+        homebridge_hidden: true
+
+  customize_glob:
+    sensor.*_linkquality:
+      friendly_name: "Verbindingssterkte"
+      <<: *common
+      <<: *hidden

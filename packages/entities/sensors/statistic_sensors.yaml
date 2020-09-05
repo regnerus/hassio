@@ -1,0 +1,91 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      common: &common
+        package: "statistics"
+      hidden: &hidden
+        hidden: true
+        homebridge_hidden: true
+    
+    binary_sensor.cooking:
+      friendly_name: Koken
+      icon: mdi:food
+      <<: *common
+    
+    # sensor.kitchen_time:
+    #   <<: *hidden
+
+# sensor:
+#   - platform: history_stats
+#     name: Kitchen Occupancy Time
+#     entity_id: binary_sensor.kitchen_bodysensor_1_occupancy
+#     state: 'on'
+#     type: ratio
+#     duration: 00:15:00
+#     end: '{{ now() }}'
+#   - platform: history_stats
+#     name: Livingroom Occupancy Time
+#     entity_id: binary_sensor.livingroom_bodysensor_group_occupancy
+#     state: 'on'
+#     type: ratio
+#     duration: 01:00:00
+#     end: '{{ now() }}'
+
+binary_sensor:
+  - platform: template
+    sensors:
+      motion_last10:
+        value_template: '{{(as_timestamp(now())-as_timestamp(states.group.body_sensors.state.last_changed)) < 600 }}'
+        friendly_name: Motion changed in Last 10min
+        device_class: motion
+      door_last10:
+        value_template: '{{(as_timestamp(now())-as_timestamp(states.group.door_sensors.state.last_changed)) < 600 }}'
+        friendly_name: Door changed in Last 10min
+        device_class: door
+  - platform: 'bayesian'
+    name: 'Cooking'
+    prior: 0.0625
+    probability_threshold: 0.5
+    observations:
+      - platform: 'numeric_state'
+        entity_id: 'sensor.kitchen_occupancy_15min'
+        prob_given_true: 0.95
+        above: 45
+      - platform: 'state'
+        entity_id: 'media_player.google_home_keuken'
+        prob_given_true: 0.95
+        to_state: 'playing'
+      - platform: 'numeric_state'
+        entity_id: 'sensor.furnace_power'
+        prob_given_true: 0.90
+        above: 0.5
+      - platform: template
+        value_template: >-
+            {{ strptime("17:00", "%H%M")  < now().strftime("%H:%M")
+              or now().strftime("%H:%M") < strptime("20:30", "%H%M") }}
+        prob_given_true: 0.7
+  - platform: 'bayesian'
+    name: 'Sleeping'
+    prior: 0.375
+    probability_threshold: 0.8
+    observations:
+      - entity_id: 'binary_sensor.sun_up'
+        prob_given_true: 1.0
+        prob_given_false: 0.2
+        platform: 'state'
+        to_state: 'off'
+      # - entity_id: 'group.master_bedroom_lights'
+      #   prob_given_true: 1.0
+      #   prob_given_false: 0.4
+      #   platform: 'state'
+      #   to_state: 'off'
+      - entity_id: 'group.livingroom_lights'
+        prob_given_true: 1.0
+        prob_given_false: 0.4
+        platform: 'state'
+        to_state: 'off'
+      - entity_id: 'binary_sensor.alarm_night_bodysensor_group_occupancy'
+        prob_given_true: 0.8
+        prob_given_false: 0.5
+        platform: 'state'
+        to_state: 'off'

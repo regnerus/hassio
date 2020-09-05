@@ -1,0 +1,190 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      common: &common
+        package: "mediaplayers"
+      grouped: &grouped
+        hidden: true
+        homebridge_hidden: true
+    
+    # ---
+    # Grouped:
+    media_player.livingroom_tv_ir:
+      <<: *grouped
+    # media_player.livingroom_tv_philips:
+    #   <<: *grouped
+    media_player.sonos_play5:
+      <<: *grouped
+    switch.study_speakers:
+      <<: *grouped
+    
+    # ---
+    # Localization: Device Names
+    media_player.livingroom_tv:
+      friendly_name: TV
+      homebridge_name: TV
+      device_class: tv
+      <<: *common
+    media_player.sonos_one:
+      friendly_name: Sonos
+      homebridge_name: Sonos One
+      device_class: speaker
+      icon: mdi:speaker
+      <<: *common
+    # media_player.study_bluetooth_receiver:
+    #   friendly_name: Speakers
+    #   homebridge_name: Bluetooth Speakers
+    #   device_class: speaker
+    #   icon: mdi:speaker
+    #   <<: *common
+    
+  # customize_glob:
+  #   media_player.plex_*:
+  #     <<: *grouped
+    
+switch:
+  - platform: broadlink
+    host: !secret rm_mini_ip
+    mac: !secret rm_mini_mac
+
+script: 
+  tv_media_play_pause:
+    sequence:
+      - service: mqtt.publish
+        data_template:
+          payload: ''
+          topic: eventghost/media/playpause
+          retain: true
+
+media_player:
+  - platform: smartir
+    name: Livingroom TV IR
+    device_code: 1001
+    controller_data: !secret rm_mini_ip
+    # controller_send_service: switch.broadlink_send_packet_192_168_1_23
+    # power_sensor: binary_sensor.livingroom_tv_power
+  # - platform: plex
+  #   show_all_controls: false
+  #   use_episode_art: false
+  #   remove_unavailable_clients: true
+  #   client_remove_interval: 600
+  - platform: philips_js
+    name: Livingroom TV Philips
+    host: !secret philips_tv_ip
+    api_version: 6
+    turn_on_action:
+      service: media_player.turn_on
+      data:
+        entity_id: media_player.livingroom_tv_ir
+  # - platform: universal
+  #   name: Study Bluetooth Receiver
+  #   commands:
+  #     turn_on:
+  #       service: switch.turn_on
+  #       data: 
+  #         entity_id: switch.study_speakers
+  #     turn_off:
+  #       service: switch.turn_off
+  #       data: 
+  #         entity_id: switch.study_speakers
+  #   attributes:
+  #     state: switch.study_speakers
+  - platform: universal
+    name: Livingroom TV
+    state_template: > 
+      {% if is_state('media_player.livingroom_tv_philips', 'off') %}
+      off
+      {% elif not is_state('media_player.plex_television', 'idle') %}
+      {{ states('media_player.plex_television') }}
+      {% elif not states.media_player.sonos_livingroom.attributes.media_content_type == "music" %}
+      playing
+      {% elif is_state('media_player.livingroom_tv_philips', 'on') %}
+      on
+      {% else %}
+      off
+      {% endif %}
+    children:
+      - media_player.plex_television
+      - media_player.sonos_livingroom
+      - media_player.livingroom_tv_philips
+    commands:
+      turn_on:
+        service: media_player.turn_on
+        data: 
+          entity_id: media_player.livingroom_tv_ir
+      turn_off:
+        service: media_player.turn_off
+        data: 
+          entity_id: media_player.livingroom_tv_philips
+      volume_up:
+        service: media_player.volume_up
+        data: 
+          entity_id: media_player.sonos_livingroom
+      volume_down:
+        service: media_player.volume_down
+        data: 
+          entity_id: media_player.sonos_livingroom
+      volume_mute:
+        service: media_player.volume_mute
+        data: 
+          entity_id: media_player.sonos_livingroom
+      volume_set:
+        service: media_player.volume_set
+        data_template:
+          entity_id: media_player.sonos_livingroom
+          volume_level: '{{ volume_level }}'
+    attributes:
+      is_volume_muted: media_player.sonos_livingroom|is_volume_muted
+      volume_level: media_player.sonos_livingroom|volume_level
+      source: media_player.sonos_livingroom|source
+      source_list: media_player.sonos_livingroom|source_list
+  - platform: universal
+    name: Livingroom Media
+    state_template: > 
+      {% if is_state('media_player.livingroom_sonos_music', 'playing') %}
+      {{ states('media_player.sonos_livingroom') }}
+      {% else %}
+      {{ states('media_player.livingroom_tv') }}
+      {% endif %}
+    children:
+      - media_player.livingroom_sonos_music
+      - media_player.livingroom_tv
+    commands:
+      volume_up:
+        service: media_player.volume_up
+        data: 
+          entity_id: media_player.sonos_livingroom
+      volume_down:
+        service: media_player.volume_down
+        data: 
+          entity_id: media_player.sonos_livingroom
+      volume_mute:
+        service: media_player.volume_mute
+        data: 
+          entity_id: media_player.sonos_livingroom
+      volume_set:
+        service: media_player.volume_set
+        data_template:
+          entity_id: media_player.sonos_livingroom
+          volume_level: '{{ volume_level }}'
+    attributes:
+      is_volume_muted: media_player.sonos_livingroom|is_volume_muted
+      volume_level: media_player.sonos_livingroom|volume_level
+      source: media_player.sonos_livingroom|source
+      source_list: media_player.sonos_livingroom|source_list
+  - platform: universal
+    name: Livingroom Sonos Music
+    state_template: > 
+      {% if is_state('media_player.sonos_livingroom', 'playing') and states.media_player.sonos_livingroom.attributes.media_content_type == "music" %}
+      {{ states('media_player.sonos_livingroom') }}
+      {% else %}
+      off
+      {% endif %}
+    children:
+      - media_player.sonos_livingroom
+# light:
+#   - platform: philips_ambilight
+#     name: Livingroom TV Ambilight
+#     host: !secret philips_tv_ip
+#     username: host
+#     password: password

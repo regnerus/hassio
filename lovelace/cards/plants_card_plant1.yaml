@@ -1,0 +1,41 @@
+title: Bananenplant
+anchors:
+  graph_commons: &graph_commons
+    height: 150
+    points_per_hour: 0.5
+    hours_to_show: 72
+    hour24: true
+    decimals: 1
+    show:
+      labels: true
+      labels_secondary: true
+# large: true
+card: 
+    type: entities
+    entities:
+      - type: custom:secondaryinfo-entity-row
+        entity: plant.plant_musa
+        icon: mdi:sprout
+        name: Status
+        secondary_info: "[[ plant.plant_musa.attributes.problem ]]"
+      - type: custom:mini-graph-card
+        entities:
+        - entity: sensor.plant_musa_conductivity
+          name: Voeding
+          color: "#b5930a"
+        - entity: sensor.plant_musa_moisture
+          name: Water
+          color: "#f1c40f"
+          y_axis: secondary
+        name: Voeding en Water (72h)
+        lower_bound: 50
+        lower_bound_secondary: 0
+        upper_bound: 2000
+        upper_bound_secondary: 60
+        icon: mdi:water
+        <<: *graph_commons
+      - type: sensor
+        entity: sensor.plant_musa_light_intensity
+      - type: sensor
+        entity: sensor.plant_musa_temperature
+      

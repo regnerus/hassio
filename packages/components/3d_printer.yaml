@@ -1,0 +1,43 @@
+# ---
+# Component: Octoprint
+# 
+#
+#
+homeassistant:
+  customize:
+    package.node_anchors:
+      common: &common
+        package: "octoprint"
+      # mqtt: &mqtt
+      #   platform: mqtt
+      #   qos: 2
+
+    # ---
+    # Localization: Sensor Names
+    camera.octoprint:
+      <<: *common
+
+  customize_glob:
+  # ---
+  # Localization: Sensor Names
+    # sensor.plant_*_moisture:
+    #   friendly_name: "Vochtigheid"
+    #   <<: *common
+
+camera:
+  - platform: mjpeg
+    name: OctoPrint
+    still_image_url: !secret octoprint_camera_still_url
+    mjpeg_url: !secret octoprint_camera_url
+
+binary_sensor:
+  - platform: octoprint
+    monitored_conditions:
+      - Printing
+      - Printing Error
+
+# sensor:
+#   - platform: octoprint
+#     monitored_conditions:
+#       - Printing
+#       - Printing Error

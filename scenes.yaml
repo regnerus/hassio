@@ -1,0 +1,509 @@
+- name: Master Bedroom Default
+  id: master_bedroom_default
+  entities:
+    light.master_bedroom_ceiling_light:
+      brightness: 220
+      color_temp: 420
+      state: true
+    light.master_bedroom_ledstrip:
+      brightness: 255
+      color_temp: 420
+      state: true
+    light.master_bedroom_bedside_lights:
+      brightness: 220
+      state: true
+- name: Master Bedroom Dim
+  id: master_bedroom_dim
+  entities:
+    light.master_bedroom_ceiling_light:
+      state: false
+    light.master_bedroom_ledstrip:
+      brightness: 255
+      color_temp: 450
+      state: true
+    light.master_bedroom_bedside_lights:
+      brightness: 12
+      state: true
+- name: Master Bedroom Off
+  id: master_bedroom_off
+  entities:
+    light.master_bedroom_ceiling_light:
+      state: false
+    light.master_bedroom_bedside_lights:
+      state: false
+- name: Livingroom Default
+  id: livingroom_default
+  entities:
+    light.livingroom_ceiling_light:
+      # brightness: 135
+      # color_temp: 384
+      state: true
+    light.livingroom_floor_lamp:
+      # brightness: 220
+      # color_temp: 384
+      state: true
+    light.livingroom_table_light:
+      # brightness: 200
+      # color_temp: 383
+      state: true
+    light.livingroom_cabinet_light:
+      # brightness: 120
+      # color_temp: 383
+      state: true
+    light.livingroom_cabinet_ledstrip:
+      brightness: 35
+      # color_temp: 400
+      state: true
+    # light.christmas_tree:
+    #   brightness: 80
+    #   speed: 50
+    #   rgb_color:
+    #   - 255
+    #   - 175
+    #   - 108
+    #   effect: Twinklefox
+    #   state: true
+    light.christmas_tree:
+      brightness: 255
+      rgb_color:
+      - 255
+      - 175
+      - 108
+      effect: Solid
+      state: true
+    light.christmas_ornament:
+      brightness: 178
+      effect: Flicker
+      state: true
+# - name: Livingroom Late 15
+#   id: livingroom_late_15
+#   entities:
+#     light.livingroom_ceiling_light:
+#       brightness: 125
+#       color_temp: 395
+#       state: true
+#     light.livingroom_floor_lamp:
+#       brightness: 165
+#       color_temp: 393
+#       state: true
+#     light.livingroom_table_light:
+#       brightness: 150
+#       color_temp: 392
+#       state: true
+#     light.livingroom_cabinet_light:
+#       brightness: 90
+#       color_temp: 392
+#       state: true
+#     light.livingroom_cabinet_ledstrip:
+#       brightness: 28
+#       color_temp: 407
+#       state: true
+#     light.christmas_tree:
+#       brightness: 80
+#       speed: 50
+#       rgb_color:
+#       - 255
+#       - 175
+#       - 108
+#       effect: Twinklefox
+#       state: true
+#     light.christmas_ornament:
+#       brightness: 178
+#       effect: Flicker
+#       state: true
+# - name: Livingroom Late 30
+#   id: livingroom_late_30
+#   entities:
+#     light.livingroom_ceiling_light:
+#       brightness: 116
+#       color_temp: 405
+#       state: true
+#     light.livingroom_floor_lamp:
+#       brightness: 154
+#       color_temp: 402
+#       state: true
+#     light.livingroom_table_light:
+#       brightness: 140
+#       color_temp: 402
+#       state: true
+#     light.livingroom_cabinet_light:
+#       brightness: 84
+#       color_temp: 402
+#       state: true
+#     light.livingroom_cabinet_ledstrip:
+#       brightness: 25
+#       color_temp: 414
+#       state: true
+#     light.christmas_tree:
+#       brightness: 80
+#       speed: 50
+#       rgb_color:
+#       - 255
+#       - 175
+#       - 108
+#       effect: Twinklefox
+#       state: true
+#     light.christmas_ornament:
+#       brightness: 178
+#       effect: Flicker
+#       state: true
+# - name: Livingroom Late 45
+#   id: livingroom_late_45
+#   entities:
+#     light.livingroom_ceiling_light:
+#       brightness: 89
+#       color_temp: 416
+#       state: true
+#     light.livingroom_floor_lamp:
+#       brightness: 121
+#       color_temp: 411
+#       state: true
+#     light.livingroom_table_light:
+#       brightness: 110
+#       color_temp: 411
+#       state: true
+#     light.livingroom_cabinet_light:
+#       brightness: 66
+#       color_temp: 411
+#       state: true
+#     light.livingroom_cabinet_ledstrip:
+#       brightness: 18
+#       color_temp: 420
+#       state: true
+#     light.christmas_tree:
+#       brightness: 80
+#       speed: 50
+#       rgb_color:
+#       - 255
+#       - 175
+#       - 108
+#       effect: Twinklefox
+#       state: true
+#     light.christmas_ornament:
+#       brightness: 178
+#       effect: Flicker
+#       state: true
+- name: Livingroom Bright
+  id: livingroom_bright
+  entities:
+    light.livingroom_ceiling_light:
+      brightness: 255
+      color_temp: 328
+      state: true
+    light.livingroom_floor_lamp:
+      brightness: 255
+      color_temp: 328
+      state: true
+    light.livingroom_table_light:
+      brightness: 255
+      color_temp: 328
+      state: true
+    light.livingroom_cabinet_light:
+      brightness: 186
+      color_temp: 328
+      state: true
+    light.livingroom_cabinet_ledstrip:
+      brightness: 255
+      color_temp: 328
+      state: true
+    light.christmas_tree:
+      brightness: 85
+      speed: 50
+      rgb_color:
+      - 255
+      - 218
+      - 182
+      effect: Twinklefox
+      state: true
+    light.christmas_ornament:
+      brightness: 255
+      effect: None
+      state: true
+- id: livingroom_romantic
+  name: Livingroom Romantic
+  entities:
+    light.christmas_ornament:
+      effect_list:
+      - None
+      - Flicker
+      - Strobe
+      - Twinkle
+      - Fade
+      restored: true
+      state: unavailable
+      supported_features: 45
+    light.christmas_tree:
+      restored: true
+      state: unavailable
+      supported_features: 0
+    light.livingroom_cabinet_ledstrip:
+      brightness: 25
+      color:
+        x: 0.529
+        y: 0.347
+      color_temp: 162
+      friendly_name: TV Meubel LED Strip
+      hs_color:
+      - 14.583
+      - 56.471
+      max_mireds: 500
+      min_mireds: 153
+      rgb_color:
+      - 255
+      - 145
+      - 110
+      state: 'on'
+      supported_features: 59
+      xy_color:
+      - 0.528
+      - 0.346
+    light.livingroom_cabinet_light:
+      brightness: 32
+      color:
+        x: 0.4599
+        y: 0.4106
+      color_temp: 445
+      friendly_name: TV Meubel Lamp
+      linkquality: 96
+      max_mireds: 500
+      min_mireds: 153
+      state: 'on'
+      supported_features: 43
+    light.livingroom_ceiling_light:
+      brightness: 49
+      color_temp: 454
+      friendly_name: Plafondlamp
+      max_mireds: 500
+      min_mireds: 153
+      package: lights
+      state: 'on'
+      supported_features: 43
+    light.livingroom_floor_lamp:
+      brightness: 142
+      color:
+        x: 0.529
+        y: 0.347
+      color_temp: 162
+      friendly_name: Staande Lamp
+      hs_color:
+      - 14.583
+      - 56.471
+      max_mireds: 500
+      min_mireds: 153
+      package: lights
+      rgb_color:
+      - 255
+      - 145
+      - 110
+      state: 'on'
+      supported_features: 59
+      xy_color:
+      - 0.528
+      - 0.346
+    light.livingroom_table_light:
+      brightness: 136
+      color:
+        x: 0.4599
+        y: 0.4106
+      color_temp: 445
+      friendly_name: Table Light
+      linkquality: 39
+      max_mireds: 500
+      min_mireds: 153
+      state: 'on'
+      supported_features: 43
+- name: Livingroom Candy
+  id: livingroom_candy
+  entities:
+    light.livingroom_ceiling_light:
+      brightness: 135
+      color_temp: 328
+      state: true
+    light.livingroom_floor_lamp:
+      brightness: 255
+      rgb_color:
+      - 246
+      - 148
+      - 193
+      effect: colorloop
+      state: true
+    light.livingroom_table_light:
+      brightness: 200
+      color_temp: 328
+      state: true
+    light.livingroom_cabinet_light:
+      brightness: 84
+      color_temp: 328
+      state: true
+    light.livingroom_cabinet_ledstrip:
+      brightness: 58
+      rgb_color:
+      - 169
+      - 222
+      - 249
+      state: true
+    light.christmas_tree:
+      brightness: 25
+      speed: 85
+      effect: Rainbow
+      rgb_color:
+      - 255
+      - 8
+      - 128
+      state: true
+    light.christmas_ornament:
+      brightness: 220
+      effect: Fade
+      state: true
+- name: Livingroom Sea
+  id: livingroom_sea
+  entities:
+    light.livingroom_ceiling_light:
+      brightness: 125
+      color_temp: 376
+      state: true
+    light.livingroom_floor_lamp:
+      brightness: 255
+      rgb_color:
+      - 0
+      - 255
+      - 254
+      state: true
+    light.livingroom_table_light:
+      brightness: 150
+      color_temp: 375
+      state: true
+    light.livingroom_cabinet_light:
+      brightness: 90
+      color_temp: 375
+      state: true
+    light.livingroom_cabinet_ledstrip:
+      brightness: 48
+      rgb_color:
+      - 0
+      - 255
+      - 254
+      state: true
+    light.christmas_tree:
+      brightness: 25
+      speed: 70
+      rgb_color:
+      - 0
+      - 255
+      - 254
+      effect: Fire Flicker
+      state: true
+    light.christmas_ornament:
+      brightness: 178
+      effect: Fade
+      state: true
+- id: livingroom_movies
+  name: Livingroom Movies
+  entities:
+    light.christmas_ornament:
+      effect_list:
+      - None
+      - Flicker
+      - Strobe
+      - Twinkle
+      - Fade
+      restored: true
+      state: unavailable
+      supported_features: 45
+    light.christmas_tree:
+      restored: true
+      state: unavailable
+      supported_features: 0
+    light.livingroom_cabinet_ledstrip:
+      brightness: 7
+      color:
+        x: 0.313059507478705
+        y: 0.323172994053855
+      color_temp: 153
+      friendly_name: TV Meubel LED Strip
+      hs_color:
+      - 210
+      - 4.706
+      max_mireds: 500
+      min_mireds: 153
+      rgb_color:
+      - 242
+      - 248
+      - 255
+      state: 'on'
+      supported_features: 59
+      xy_color:
+      - 0.312
+      - 0.322
+    light.livingroom_cabinet_light:
+      brightness: 1
+      color:
+        x: 0.4599
+        y: 0.4106
+      color_temp: 310
+      friendly_name: TV Meubel Lamp
+      linkquality: 93
+      max_mireds: 500
+      min_mireds: 153
+      state: 'on'
+      supported_features: 43
+    light.livingroom_ceiling_light:
+      brightness: 1
+      color_temp: 362
+      friendly_name: Plafondlamp
+      max_mireds: 500
+      min_mireds: 153
+      package: lights
+      state: 'on'
+      supported_features: 43
+    light.livingroom_floor_lamp:
+      brightness: 40
+      color:
+        x: 0.256
+        y: 0.286
+      color_temp: 115
+      friendly_name: Staande Lamp
+      hs_color:
+      - 210.411
+      - 28.627
+      max_mireds: 500
+      min_mireds: 153
+      package: lights
+      rgb_color:
+      - 182
+      - 218
+      - 255
+      state: 'on'
+      supported_features: 59
+      xy_color:
+      - 0.256
+      - 0.286
+    light.livingroom_table_light:
+      brightness: 32
+      color:
+        x: 0.4599
+        y: 0.4106
+      color_temp: 310
+      friendly_name: Table Light
+      linkquality: 33
+      max_mireds: 500
+      min_mireds: 153
+      state: 'on'
+      supported_features: 43
+- name: Livingroom Off
+  id: livingroom_off
+  entities:
+    light.livingroom_ceiling_light:
+      state: false
+    light.livingroom_floor_lamp:
+      state: false
+    light.livingroom_table_light:
+      state: false
+    light.livingroom_cabinet_light:
+      state: false
+    light.livingroom_cabinet_ledstrip:
+      state: false
+    light.christmas_tree:
+      state: false
+    light.christmas_ornament:
+      state: false

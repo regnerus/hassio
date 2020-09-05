@@ -1,0 +1,11 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      common: &common
+        package: "computers"
+
+    shell_command.lovelace_gen:
+      <<: *common
+
+lovelace:
+  mode: yaml

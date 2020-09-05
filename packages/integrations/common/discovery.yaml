@@ -1,0 +1,5 @@
+discovery:
+  ignore:
+    - ikea_tradfri
+    - philips_hue
+    - yeelight

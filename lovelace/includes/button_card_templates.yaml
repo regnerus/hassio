@@ -1,0 +1,139 @@
+people_state:
+  show_state: true
+  show_icon: true
+  show_name: false
+  show_entity_picture: true
+  tap_action:
+    action: more-info
+  # styles:
+  #   card:
+  #     - font-size: 18px
+  state:
+    - value: 'Afwezig'
+      styles:
+        icon:
+          - filter: grayscale(100%) #blur(5px)
+    - value: 'Lang Afwezig'
+      styles:
+        icon:
+          - filter: grayscale(100%)
+    - value: 'Werk'
+      styles:
+        icon:
+          - filter: grayscale(100%)
+    - value: 'Universiteit'
+      styles:
+        icon:
+          - filter: grayscale(100%)
+  style: |
+    img {
+      width: 100% !important;
+    }
+    #img-cell {
+      border-radius: 50px;
+      margin-top: 10px;
+      height: 50px !important;
+      width: 50px !important;
+    }
+    #state {
+      padding-top: 5px;
+    }
+people_button:
+  show_state: true
+  show_icon: true
+  show_name: false
+  # size: 16px
+  tap_action:
+    action: more-info
+  styles:
+    card:
+      - height: 27px
+      - font-size: 12px
+      - box-shadow: unset
+dash_button:
+    size: 35px
+    color_type: card
+    tap_action:
+      action: more-info
+    hold_action:
+      action: toggle
+    styles:
+      icon: 
+        - margin-top: 5px
+      card:
+        - height: 90px
+        - font-size: 12px
+    style: !include style.yaml 
+plant_state:
+  show_state: true
+  show_icon: true
+  show_name: false
+  show_entity_picture: true
+  tap_action:
+    action: more-info
+  # styles:
+  #   card:
+  #     - font-size: 18px
+  # state:
+  #   - value: 'Afwezig'
+  #     styles:
+  #       icon:
+  #         - filter: grayscale(100%) #blur(5px)
+  #   - value: 'Lang Afwezig'
+  #     styles:
+  #       icon:
+  #         - filter: grayscale(100%)
+  #   - value: 'Werk'
+  #     styles:
+  #       icon:
+  #         - filter: grayscale(100%)
+  #   - value: 'Universiteit'
+  #     styles:
+  #       icon:
+  #         - filter: grayscale(100%)
+  style: |
+    img {
+      width: 100% !important;
+    }
+    #img-cell {
+      border-radius: 50px;
+      margin-top: 10px;
+      height: 50px !important;
+      width: 50px !important;
+    }
+    #state {
+      padding-top: 5px;
+    }
+small_button:
+    # size: 35px
+    color_type: icon
+    tap_action:
+      action: more-info
+    hold_action:
+      action: toggle
+    styles:
+    card:
+      - height: 27px
+      - font-size: 12px
+      - box-shadow: unset
+    # styles:
+    #   icon: 
+    #     - margin-top: 5px
+    #   card:
+    #     # - height: 90px
+    #     - font-size: 12px
+    style: !include style.yaml 
+small_info_button:
+    size: 35px
+    color_type: icon
+    tap_action:
+      action: more-info
+    hold_action:
+      action: toggle
+    styles:
+      icon: 
+        - margin-top: 5px
+      card:
+        # - height: 90px
+        - font-size: 12px
+    style: !include style.yaml 

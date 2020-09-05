@@ -1,0 +1,134 @@
+slate-customized:
+  background-image: 'center / cover no-repeat url("/local/bg.png") fixed'
+
+  app-header-background-color: "#171717"
+  app-header-text-color: "#BDC1C6"
+
+  # Main colors
+  primary-color: '#2980b9'
+  accent-color: '#b58e31'
+  dark-primary-color: '#2980b9'
+  light-primary-color: '#2980b9'
+
+  # Background colors
+  primary-background-color: "#171717"
+  secondary-background-color: var(--primary-background-color)
+  
+  # Text colors
+  primary-text-color: "#BDC1C6"
+  secondary-text-color: "#BDC1C6"
+  text-primary-color: "#FFFFFF"
+  disabled-text-color: "#717171"
+
+  label-badge-border-color: 'green'
+  # Sidebar
+  sidebar-icon-color: var(--app-header-text-color)
+  sidebar-text-color: '#BDC1C6'
+  sidebar-background-color: "#202124"
+  sidebar-selected-background-color: var(--primary-background-color)
+  sidebar-selected-icon-color: "#5F9BEA"
+  sidebar-selected-text-color: var(--sidebar-selected-icon-color))
+  # States and Badges
+  state-icon-color: "#5F6267"
+  state-icon-active-color: "#5F9BEA"
+  state-icon-unavailable-color: var(--disabled-text-color)
+
+  # divider-color: 'rgba(0, 0, 0, .12)'
+  divider-color: var(--primary-background-color)
+  # divider-color: var(--primary-background-color)
+  # table-row-background-color: '#292929'
+  # table-row-alternative-background-color: '#292929'
+  table-row-background-color: var(--primary-background-color)
+  table-row-alternative-background-color: var(--secondary-background-color)
+  # Nav Menu
+  paper-listbox-color: '#777777'
+  paper-listbox-background-color: '#141414'
+  paper-grey-50: 'var(--primary-text-color)'
+  paper-grey-200: '#222222'
+
+   # UI
+  # paper-card-header-color: 'var(--text-color)'                                    # Title in settings
+  # primary-background-color: 'var(--background-color)'                             # Background (also title background in left menu)
+  mdc-theme-primary: 'var(--accent-color)'                                 # Action Buttons (save, restart etc.)
+  # card-background-color: 'var(--background-card-color)'                           # Entity Registry Background
+
+  # Paper card
+  ha-card-border-radius: '5px'
+  # ha-card-box-shadow: 1px 1px 5px 0px rgb(12, 12, 14)
+  paper-card-background-color: "#202124"
+  paper-listbox-background-color: "#202124"
+
+  # paper-card-header-color: '#2980b9'
+  paper-card-header-color: var(--primary-background-color)
+  # paper-card-background-color: 'rgba(41,41,41,.7)'
+  paper-dialog-background-color: '#292929'
+  paper-item-icon-color: 'var(--primary-text-color)'
+  paper-item-icon-active-color: '#b58e31'
+  paper-item-icon_-_color: 'green'
+  paper-item-selected_-_background-color: '#292929'
+  paper-tabs-selection-bar-color: 'green'
+  # Labels
+  label-badge-background-color: "#202124"
+  label-badge-text-color: "#BDC1C6"
+  label-badge-red: "#D06568"
+  label-badge-green: "#80C884"
+  label-badge-blue: "#5F9BEA"
+  label-badge-yellow: "#DFC271"
+  label-badge-gray: "#5F6267"
+  # Switches
+  paper-toggle-button-checked-button-color: "#5F9BEA"
+  paper-toggle-button-checked-bar-color: "#404D64"
+  paper-toggle-button-unchecked-button-color: "#B9B9B9"
+  paper-toggle-button-unchecked-bar-color: "#636466"
+  paper-toggle-button-checked-ink-color: 'var(--disabled-text-color)'
+  paper-toggle-button-unchecked-ink-color: 'var(--disabled-text-color)'
+  switch-checked-color: 'var(--paper-toggle-button-checked-button-color)'
+  switch-unchecked-color: 'var(--disabled-text-color)'
+  switch-unchecked-button-color: 'var(--disabled-text-color)'
+  switch-unchecked-track-color: 'var(--disabled-text-color)'
+  # Sliders
+  paper-slider-knob-color: "#5F9BEA"
+  paper-slider-knob-start-color: var(--paper-slider-knob-color)
+  paper-slider-pin-color: var(--paper-slider-knob-color)
+  paper-slider-active-color: var(--paper-slider-knob-color)
+  paper-slider-secondary-color: var(--light-primary-color)
+  paper-slider-container-color: 'linear-gradient(var(--primary-background-color), var(--secondary-background-color)) no-repeat'
+  paper-slider-disabled-active-color: 'var(--disabled-text-color)'
+  paper-slider-disabled-secondary-color: 'var(--disabled-text-color)'
+  # Google colors
+  google-red-500: '#b93829'
+  google-green-500: '#2980b9'
+  # Changes to fix history/logbook menus
+  lumo-primary-text-color: '#2980b9'
+  lumo-secondary-text-color: '#2980b9'
+  lumo-primary-color: '#2980b9'
+  # Calendar day numbers
+  lumo-body-text-color: '#b58e31'
+  # Calendar/Date-Picker Background
+  lumo-base-color: '#222222'
+  # Month/Year header
+  lumo-header-text-color: 'var(--lumo-body-text-color)'
+  # DayOfWeek Header
+  lumo-tertiary-text-color: 'var(--lumo-body-text-color)'
+  lumo-shade: '#222222'
+  lumo-shade-90pct: 'rgba(34, 34, 34, .9)'
+  lumo-shade-80pct: 'rgba(34, 34, 34, .8)'
+  lumo-shade-70pct: 'rgba(34, 34, 34, .7)'
+  lumo-shade-60pct: 'rgba(34, 34, 34, .6)'
+  lumo-shade-50pct: 'rgba(34, 34, 34, .5)'
+  lumo-shade-40pct: 'rgba(34, 34, 34, .4)'
+  lumo-shade-30pct: 'rgba(34, 34, 34, .3)'
+  lumo-shade-20pct: 'rgba(34, 34, 34, .2)'
+  lumo-shade-10pct: 'rgba(34, 34, 34, .1)'
+  lumo-shade-5pct: 'rgba(34, 34, 34, .05)'
+  lumo-tint-5pct: '#222222'
+  # fix for device configuration screen
+  card-background-color: "var(--paper-card-background-color)"
+
+   # HACS
+  hacs-badge-color: 'var(--accent-color)'                                         # New Badge
+  hacs-status-installed: 'var(--text-color)'                                      # Installed Icon
+  hacs-status-pending-restart: 'var(--text-dark-color)'                           # Restart Icon
+  hacs-status-pending-update: 'var(--accent-color)'                               # Update Icon
+
+  st-mode-background: '#000'

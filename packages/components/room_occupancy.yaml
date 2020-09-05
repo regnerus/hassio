@@ -1,0 +1,71 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      common: &common
+        package: "occupancy"
+      hidden: &hidden
+        hidden: true
+        homebridge_hidden: true
+    
+    # binary_sensor.cooking:
+    #   friendly_name: Koken
+    #   icon: mdi:food
+    #   <<: *common
+    
+    # # sensor.kitchen_time:
+    # #   <<: *hidden
+  customize_glob:
+    sensor.*_occupancy_15min:
+      <<: *common
+
+sensor:
+  - platform: history_stats
+    name: Livingroom Occupancy 15min
+    entity_id: binary_sensor.livingroom_bodysensor_group_occupancy
+    state: 'on'
+    type: ratio
+    duration: 00:15:00
+    end: '{{ now() }}'
+  - platform: history_stats
+    name: Entrance Hall Occupancy 15min
+    entity_id: binary_sensor.entrance_hall_bodysensor_1_occupancy
+    state: 'on'
+    type: ratio
+    duration: 00:15:00
+    end: '{{ now() }}'
+  - platform: history_stats
+    name: Kitchen Occupancy 15min
+    entity_id: binary_sensor.kitchen_bodysensor_1_occupancy
+    state: 'on'
+    type: ratio
+    duration: 00:15:00
+    end: '{{ now() }}'
+  - platform: history_stats
+    name: Utility Room Occupancy 15min
+    entity_id: binary_sensor.utility_room_bodysensor_1_occupancy
+    state: 'on'
+    type: ratio
+    duration: 00:15:00
+    end: '{{ now() }}'
+  - platform: history_stats
+    name: Landing Occupancy 15min
+    entity_id: binary_sensor.landing_bodysensor_1_occupancy
+    state: 'on'
+    type: ratio
+    duration: 00:15:00
+    end: '{{ now() }}'
+  - platform: history_stats
+    name: Guest Bedroom Occupancy 15min
+    entity_id: binary_sensor.guest_bedroom_bodysensor_1_occupancy
+    state: 'on'
+    type: ratio
+    duration: 00:15:00
+    end: '{{ now() }}'
+  - platform: history_stats
+    name: Study Occupancy 15min
+    entity_id: binary_sensor.study_bodysensor_group_occupancy
+    state: 'on'
+    type: ratio
+    duration: 00:15:00
+    end: '{{ now() }}'
+    

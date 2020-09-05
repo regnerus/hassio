@@ -1,0 +1,6 @@
+- entity_id: media_player.sonos_livingroom
+  name: Sonos Woonkamer
+- entity_id: media_player.sonos_kitchen
+  name: Sonos Keuken
+- entity_id: media_player.sonos_study
+  name: Sonos Studeerkamer

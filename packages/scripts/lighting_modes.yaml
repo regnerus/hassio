@@ -1,0 +1,55 @@
+script:
+  scene_default:
+    alias: Scene Default
+    description: 'Sets the input select option for the lighting mode.'
+    sequence:
+      - alias: Set Input Select
+        service: input_select.select_option
+        data:
+          entity_id: input_select.living_room_lighting_mode
+          option: Dagelijks
+  scene_bright:
+    alias: Scene Bright
+    description: 'Sets the input select option for the lighting mode.'
+    sequence:
+      - alias: Set Input Select
+        service: input_select.select_option
+        data:
+          entity_id: input_select.living_room_lighting_mode
+          option: Helder
+  scene_romantic:
+    alias: Scene Romantic
+    description: 'Sets the input select option for the lighting mode.'
+    sequence:
+      - alias: Set Input Select
+        service: input_select.select_option
+        data:
+          entity_id: input_select.living_room_lighting_mode
+          option: Romantisch
+  scene_candy:
+    alias: Scene Candy
+    description: 'Sets the input select option for the lighting mode.'
+    sequence:
+      - alias: Set Input Select
+        service: input_select.select_option
+        data:
+          entity_id: input_select.living_room_lighting_mode
+          option: Snoep
+  scene_sea:
+    alias: Scene Sea
+    description: 'Sets the input select option for the lighting mode.'
+    sequence:
+      - alias: Set Input Select
+        service: input_select.select_option
+        data:
+          entity_id: input_select.living_room_lighting_mode
+          option: Zee
+  scene_movies:
+    alias: Scene Movies
+    description: 'Sets the input select option for the lighting mode.'
+    sequence:
+      - alias: Set Input Select
+        service: input_select.select_option
+        data:
+          entity_id: input_select.living_room_lighting_mode
+          option: Film

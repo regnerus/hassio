@@ -1,0 +1,81 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      common: &common
+        package: "person"
+      grouped: &grouped
+        hidden: true
+        homebridge_hidden: true
+    # ---
+    # Localization: Sensor Names
+    person.bouke:
+      # friendly_name: Sleutels Bouke
+      # icon: mdi:key-variant
+      entity_picture: /local/presence/bouke.jpg
+      <<: *common
+    person.loes:
+      entity_picture: /local/presence/loes.jpg
+      # friendly_name: Sleutels Loes
+      # icon: mdi:key-variant
+      <<: *common
+
+sensor:
+  - platform: history_stats
+    name: Bouke Time Not Home
+    entity_id: person.bouke
+    state: 'not_home'
+    type: time
+    start: '{{ now().replace(hour=0, minute=0, second=0) }}'
+    end: '{{ now() }}'
+  - platform: history_stats
+    name: Loes Time Not Home
+    entity_id: person.loes
+    state: 'not_home'
+    type: time
+    start: '{{ now().replace(hour=0, minute=0, second=0) }}'
+    end: '{{ now() }}'
+
+# input_select:
+#   presence_bouke:
+#     options:
+#       - Thuis
+#       - Afwezig
+#       - Verlengd Afwezig
+#       - Werk
+#       - Universiteit
+
+#   presence_loes:
+#     options:
+#       - Thuis
+#       - Afwezig
+#       - Verlengd Afwezig
+#       - Werk
+#       - Universiteit
+
+# sensor:
+#   - platform: template
+#     sensors:
+#       bouke_status:
+#         friendly_name: "Bouke Status"
+#         value_template: '{{ states.input_select.presence_bouke.state }}'
+#   - platform: template
+#     sensors:
+#       loes_status:
+#         friendly_name: "Loes Status"
+#         value_template: '{{ states.input_select.presence_loes.state }}'
+
+proximity:
+  home_bouke: 
+    ignored_zones:
+      - Werk
+      - Universiteit
+    devices:
+      - device_tracker.iphone_van_bouke
+    tolerance: 50
+  home_loes: 
+    ignored_zones:
+      - Werk
+      - Universiteit
+    devices:
+      - device_tracker.sm_g950f
+    tolerance: 50

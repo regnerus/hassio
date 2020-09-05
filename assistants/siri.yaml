@@ -1,0 +1,101 @@
+media_player.livingroom_tv:
+  name: TV
+  feature_list:
+    - feature: on_off
+    - feature: play_pause
+    - feature: play_stop
+    - feature: toggle_mute
+
+media_player.study_bluetooth_receiver:
+  name: Studeerkamer Bluetooth Speakers
+  feature_list:
+    - feature: on_off
+
+light.livingroom_ceiling_light:
+  name: Woonkamer Plafond Lamp
+
+light.livingroom_floor_lamp:
+  name: Woonkamer Staande Lamp
+
+light.livingroom_table_light:
+  name: Woonkamer Tafellamp
+
+light.livingroom_cabinet_light:
+  name: Woonkamer TV Lamp
+
+light.livingroom_cabinet_ledstrip:
+  name: Woonkamer LED Strip
+
+light.master_bedroom_ceiling_light:
+  name: Slaapkamer Plafond Lamp
+
+light.master_bedroom_ledstrip:
+  name: Slaapkamer LED Strip
+
+light.master_bedroom_bedside_lights:
+  name: Nachtkast Lampen
+
+light.garden_string_light:
+  name: Tuin Verlichting
+
+light.kitchen_ceiling_light:
+  name: Keuken Verlichting
+
+light.study_ceiling_light:
+  name: Studeerkamer Verlichting
+
+light.study_desk_light:
+  name: Studeerkamer Bureaulamp
+
+switch.study_fluorescent_light:
+  name: TL Verlichting
+
+light.guest_bedroom_ceiling_light:
+  name: Logeerkamer Verlichting
+
+light.guest_bedroom_mirror_light:
+  name: Makeup Spiegel
+
+light.entrance_hall_ceiling_light:
+  name: Gang Verlichting
+
+light.utility_room_ceiling_light:
+  name: Bijkeuken Verlichting
+
+light.kitchen_pantry_light:
+  name: Kelder Lamp
+
+light.landing_ceiling_light:
+  name: Overloop Verlichting
+
+light.porch_light:
+  name: Voordeur Verlichting
+
+script.scene_default: 
+  name: Dagelijks
+
+script.scene_bright:
+  name: Helder
+
+script.scene_romantic:
+  name: Romantisch
+
+camera.rabbit_camera:
+  name: Konijnen Camera
+
+camera.front_door_camera:
+  name: Voordeur Camera
+
+camera.study_camera:
+  name: Studeerkamer Camera
+
+alarm_control_panel.alarm:
+  name: Alarm
+  code: !secret ga_pin
+
+sensor.kitchen_temperature:
+  name: Keuken Temperatuur
+
+sensor.master_bedroom_temperature:
+  name: Slaapkamer Temperatuur
+

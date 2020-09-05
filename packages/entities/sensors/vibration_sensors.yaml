@@ -1,0 +1,9 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      common: &common
+        package: "vibrationsensors"
+
+  customize_glob:
+    sensor.*_vibrationsensor*:
+      <<: *common

@@ -1,0 +1,112 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      common: &common
+        package: "devicetrackers"
+      grouped: &grouped
+        hidden: true
+        homebridge_hidden: true
+
+    # ---
+    # Localization: Sensor Names
+    binary_sensor.presence_bouke_keys:
+      friendly_name: Sleutels Bouke
+      icon: mdi:key-variant
+      <<: *common
+    binary_sensor.presence_loes_keys:
+      friendly_name: Sleutels Loes
+      icon: mdi:key-variant
+      <<: *common
+    binary_sensor.presence_bouke_backpack:
+      friendly_name: Rugzak Bouke
+      icon: mdi:bag-personal
+      <<: *common
+
+  customize_glob:
+    sensor.*_*_tracker_*:
+      <<: *grouped
+
+binary_sensor:
+  - platform: template
+    sensors:
+      0_black_tracker:
+        device_class: occupancy
+        value_template: >-
+          {{ (states('sensor.0_black_tracker_livingroom')|int < 0 and as_timestamp(now()) - as_timestamp(states.sensor['0_black_tracker_livingroom']['last_changed']) < 300)
+          or (states('sensor.0_black_tracker_kitchen')|int < 0 and as_timestamp(now()) - as_timestamp(states.sensor['0_black_tracker_kitchen']['last_changed']) < 300)
+          or (states('sensor.0_black_tracker_master_bedroom')|int < 0 and as_timestamp(now()) - as_timestamp(states.sensor['0_black_tracker_master_bedroom']['last_changed']) < 300)
+          or (states('sensor.0_black_tracker_study')|int < 0 and as_timestamp(now()) - as_timestamp(states.sensor['0_black_tracker_study']['last_changed']) < 300) }}
+      1_brown_tracker:
+        device_class: occupancy
+        value_template: >-
+          {{ (states('sensor.1_brown_tracker_livingroom')|int < 0 and as_timestamp(now()) - as_timestamp(states.sensor['1_brown_tracker_livingroom']['last_changed']) < 300)
+          or (states('sensor.1_brown_tracker_kitchen')|int < 0 and as_timestamp(now()) - as_timestamp(states.sensor['1_brown_tracker_kitchen']['last_changed']) < 300)
+          or (states('sensor.1_brown_tracker_master_bedroom')|int < 0 and as_timestamp(now()) - as_timestamp(states.sensor['1_brown_tracker_master_bedroom']['last_changed']) < 300)
+          or (states('sensor.1_brown_tracker_study')|int < 0 and as_timestamp(now()) - as_timestamp(states.sensor['1_brown_tracker_study']['last_changed']) < 300) }}
+      2_red_tracker:
+        device_class: occupancy
+        value_template: >-
+          {{ (states('sensor.2_red_tracker_livingroom')|int < 0 and as_timestamp(now()) - as_timestamp(states.sensor['2_red_tracker_livingroom']['last_changed']) < 300)
+          or (states('sensor.2_red_tracker_kitchen')|int < 0 and as_timestamp(now()) - as_timestamp(states.sensor['2_red_tracker_kitchen']['last_changed']) < 300)
+          or (states('sensor.2_red_tracker_master_bedroom')|int < 0 and as_timestamp(now()) - as_timestamp(states.sensor['2_red_tracker_master_bedroom']['last_changed']) < 300)
+          or (states('sensor.2_red_tracker_study')|int < 0 and as_timestamp(now()) - as_timestamp(states.sensor['2_red_tracker_study']['last_changed']) < 300) }}
+      3_orange_tracker:
+        device_class: occupancy
+        value_template: >-
+          {{ (states('sensor.3_orange_tracker_livingroom')|int < 0 and as_timestamp(now()) - as_timestamp(states.sensor['3_orange_tracker_livingroom']['last_changed']) < 300)
+          or (states('sensor.3_orange_tracker_kitchen')|int < 0 and as_timestamp(now()) - as_timestamp(states.sensor['3_orange_tracker_kitchen']['last_changed']) < 300)
+          or (states('sensor.3_orange_tracker_master_bedroom')|int < 0 and as_timestamp(now()) - as_timestamp(states.sensor['3_orange_tracker_master_bedroom']['last_changed']) < 300)
+          or (states('sensor.3_orange_tracker_study')|int < 0 and as_timestamp(now()) - as_timestamp(states.sensor['3_orange_tracker_study']['last_changed']) < 300) }}
+      4_yellow_tracker:
+        device_class: occupancy
+        value_template: >-
+          {{ (states('sensor.4_yellow_tracker_livingroom')|int < 0 and as_timestamp(now()) - as_timestamp(states.sensor['4_yellow_tracker_livingroom']['last_changed']) < 300)
+          or (states('sensor.4_yellow_tracker_kitchen')|int < 0 and as_timestamp(now()) - as_timestamp(states.sensor['4_yellow_tracker_kitchen']['last_changed']) < 300)
+          or (states('sensor.4_yellow_tracker_master_bedroom')|int < 0 and as_timestamp(now()) - as_timestamp(states.sensor['4_yellow_tracker_master_bedroom']['last_changed']) < 300)
+          or (states('sensor.4_yellow_tracker_study')|int < 0 and as_timestamp(now()) - as_timestamp(states.sensor['4_yellow_tracker_study']['last_changed']) < 300) }}
+      combined_tracker_bouke:
+        device_class: occupancy
+        value_template: >-
+          {{ is_state('device_tracker.ble_0_black_tracker', 'home') and is_state('device_tracker.ble_3_orange_tracker', 'home')}}
+      combined_tracker_loes:
+        device_class: occupancy
+        value_template: >-
+          {{ is_state('device_tracker.ble_1_brown_tracker', 'home') and is_state('device_tracker.ble_2_red_tracker', 'home') and is_state('device_tracker.wifi_phone_loes', 'home')}}
+
+# unifi:
+#   controllers:
+#     - host: !secret unifi_host
+#       site: Default
+#       detection_time: 120
+#       ssid_filter:
+#         # - 'IoT'
+#         - 'Weth. Beversstraat 96'
+
+device_tracker:
+  - platform: bluetooth_le_tracker
+    track_new_devices: false
+    # device_id: hci0
+    # scan_interval: 60
+    consider_home: 120
+
+# device_tracker:
+#   - platform: google_maps
+#     username: bouke.regnerus@gmail.com
+# device_tracker:
+#   - platform: unifi
+#     host: !secret unifi_host
+#     port: !secret unifi_port
+#     username: !secret unifi_username
+#     password: !secret unifi_password
+#     verify_ssl: false
+#     ssid_filter:
+#       - 'Weth. Beversstraat 96'
+#     monitored_conditions:
+#       - 'mac'
+#       - 'ip'
+#       - 'hostname'
+#       - 'rssi'
+#       - 'uptime'
+#     new_device_defaults:
+#       track_new_devices: false
+#       hide_if_away: false

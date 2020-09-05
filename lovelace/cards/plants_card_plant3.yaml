@@ -1,0 +1,40 @@
+title: Jade
+anchors:
+  graph_commons: &graph_commons
+    height: 150
+    points_per_hour: 0.5
+    hours_to_show: 72
+    hour24: true
+    decimals: 1
+    show:
+      labels: true
+      labels_secondary: true
+# large: true
+card: 
+    type: entities
+    entities:
+      - type: custom:secondaryinfo-entity-row
+        entity: plant.plant_jade
+        icon: mdi:sprout
+        name: Status
+        secondary_info: "[[ plant.plant_jade.attributes.problem ]]"
+      - type: custom:mini-graph-card
+        entities:
+        - entity: sensor.plant_jade_conductivity
+          name: Voeding
+          color: "#1e73ac"
+        - entity: sensor.plant_jade_moisture
+          name: Water
+          color: "#3498db"
+          y_axis: secondary
+        name: Voeding en Water (72h)
+        icon: mdi:water
+        lower_bound: 50
+        lower_bound_secondary: 0
+        upper_bound: 2000
+        upper_bound_secondary: 60
+        <<: *graph_commons
+      - type: sensor
+        entity: sensor.plant_jade_light_intensity
+      - type: sensor
+        entity: sensor.plant_jade_temperature

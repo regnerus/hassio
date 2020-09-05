@@ -1,0 +1,864 @@
+icon: mdi:home-assistant
+title: Dashboard
+id: Dashboard
+popup_cards:
+  person.bouke:
+    title: Bouke
+    large: true
+    card:
+      type: custom:layout-card
+      layout: horizontal
+      max_columns: 2
+      style: !include ../includes/style_entities_popup.yaml
+      cards:
+      - type: vertical-stack
+        style: !include ../includes/style_entities_popup.yaml
+        cards:
+          - type: entities
+            style: !include ../includes/style_entities_popup.yaml
+            entities:
+              - entity: device_tracker.iphone_van_bouke 
+                name: iPhone
+                icon: mdi:cellphone-iphone
+              - entity: device_tracker.wifi_laptop_bouke 
+                name: Macbook
+                icon: mdi:laptop-mac
+              - entity: binary_sensor.0_black_tracker
+                name: Sleutels
+                icon: mdi:key-variant
+              - entity: device_tracker.ble_3_orange_tracker
+                name: Fiets
+                icon: mdi:bicycle
+      - type: vertical-stack
+        style: !include ../includes/style_entities_popup.yaml
+        cards:
+          - !include
+            - ../includes/graphs_popup.yaml
+            - entity: sensor.bouke_time_not_home
+              name: Afwezig (afgelopen twee weken)
+              aggregate_func: max
+              hours_to_show: 336
+              group_by: date
+              graph: bar
+              font_size_header: 12
+              line_color: var(--custom_graph_color_4)
+  person.loes:
+    title: Loes
+    large: true
+    card:
+      type: custom:layout-card
+      layout: horizontal
+      max_columns: 2
+      style: !include ../includes/style_entities_popup.yaml
+      cards:
+      - type: vertical-stack
+        style: !include ../includes/style_entities_popup.yaml
+        cards:
+          - type: entities
+            style: !include ../includes/style_entities_popup.yaml
+            entities:
+              - entity: device_tracker.sm_g950f 
+                name: Android
+                icon: mdi:cellphone
+              - entity: device_tracker.ipad_van_loes 
+                name: iPad
+                icon: mdi:tablet-ipad
+              - entity: binary_sensor.1_brown_tracker
+                name: Sleutels
+                icon: mdi:key-variant
+              - entity: binary_sensor.2_red_tracker
+                name: Fiets
+                icon: mdi:bicycle
+      - type: vertical-stack
+        style: !include ../includes/style_entities_popup.yaml
+        cards:
+          - !include
+            - ../includes/graphs_popup.yaml
+            - entity: sensor.loes_time_not_home
+              name: Afwezig (afgelopen twee weken)
+              aggregate_func: max
+              hours_to_show: 336
+              group_by: date
+              graph: bar
+              font_size_header: 12
+              line_color: var(--custom_graph_color_4)  
+
+  group.livingroom_lights:
+    title: Woonkamer
+    large: true
+    card:
+      type: custom:layout-card
+      layout: horizontal
+      max_columns: 2
+      style: !include ../includes/style_entities_popup.yaml
+      cards:
+        - type: vertical-stack
+          cards:
+            - type: horizontal-stack
+              cards:
+                - !include
+                  - ../includes/graphs_popup.yaml
+                  - entity: sensor.downstairs_thermostat_temperature
+                    name: Temperatuur
+                    font_size_header: 12
+                    line_color: var(--custom_graph_color_1)
+                - !include
+                  - ../includes/graphs_popup.yaml
+                  - entity: sensor.downstairs_thermostat_humidity
+                    name: Luchtvochtigheid
+                    font_size_header: 12
+                    line_color: var(--custom_graph_color_3)
+            - type: markdown
+              style: !include ../includes/titles_popup.yaml
+              content: Verlichting & Beweging
+            - type: entities
+              style: !include ../includes/style_entities_popup.yaml
+              entities:
+                - entity: group.livingroom_lights
+                  name: Verlichting
+                  icon: mdi:lightbulb-group
+                  secondary_info: last-changed  
+                - type: custom:rgb-light-card
+                  colors:
+                  # First icon calls a script
+                  - type: script
+                    entity_id: script.scene_default
+                    icon_color: 'linear-gradient(25deg, #FFC970, #FFDFAB)'
+                  - type: script
+                    entity_id: script.scene_bright
+                    icon_color: 'linear-gradient(25deg, #FFD68B, #FFEDCC)'
+                  # Second icon calls a scene
+                  - type: script
+                    entity_id: script.scene_romantic
+                    icon_color: 'linear-gradient(25deg, #98364E, #FFC668)'
+                  - type: script
+                    entity_id: script.scene_candy
+                    icon_color: 'linear-gradient(25deg, #F694C1, #A9DEF9)'
+                  # - type: script
+                  #   entity_id: script.scene_sea
+                  #   icon_color: 'linear-gradient(25deg, #00FFFE, #FFC668)'
+                  - type: script
+                    entity_id: script.scene_movies
+                    icon_color: 'linear-gradient(25deg, #B6DAFF, #FFEBB6)'
+                  # - type: scene
+                  #   entity_id: scene.livingroom_off
+                  #   icon_color: 'linear-gradient(25deg, #FFFFFF, #FAFAFA)'
+            - type: entities
+              style: !include ../includes/style_entities_popup.yaml
+              entities:
+                - entity: binary_sensor.livingroom_bodysensor_group_occupancy
+                  name: Beweging
+                  secondary_info: last-changed
+                - entity: binary_sensor.livingroom_doorsensor_2_contact
+                  name: Schuifdeur
+                  secondary_info: last-changed  
+                - entity: light.garden_string_light
+                  name: Buiten Lampjes
+                - entity: fan.livingroom_fan
+                  name: Ventilator
+        - type: 'custom:simple-thermostat'
+          style: !include ../includes/style_entities_popup.yaml
+          entity: climate.downstairs
+          name: Thermostaat
+          step_size: 0.5
+          hide: 
+            temperature: true
+            state: true
+          sensors:
+            - entity: sensor.downstairs_thermostat_temperature
+              name: Woonkamer
+            - entity: sensor.kitchen_temperature
+              name: Keuken
+            # - attribute: min_temp
+            #   name: Min temp
+          control:
+            hvac: 
+              'off': false
+              'heat': false
+            preset:
+              'none':
+                name: false
+                icon: mdi:fire
+              'away':
+                name: false
+                icon: mdi:account-off
+              'eco':
+                name: false
+                icon: mdi:earth
+              'Away and Eco': false  
+  group.kitchen_lights:
+    title: Keuken/Bijkeuken
+    large: true
+    card:
+      type: custom:layout-card
+      layout: horizontal
+      max_columns: 2
+      style: !include ../includes/style_entities_popup.yaml
+      cards:
+        - type: vertical-stack
+          cards:
+            - type: entities
+              style: !include ../includes/style_entities_popup.yaml
+              entities:
+              - type: custom:mini-media-player
+                entity: media_player.sonos_kitchen
+                name: Sonos Keuken
+                artwork: cover
+                show_progress: true  
+                hide:
+                  power: true
+                  icon: true
+                  source: true
+                sonos:
+                  sync_volume: false
+                  show_group_count: true
+                  entities: !include ../includes/sonos_groups.yaml
+                group: true
+
+            - type: horizontal-stack
+              cards:
+                - !include
+                  - ../includes/graphs_popup.yaml
+                  - entity: sensor.kitchen_temperature
+                    name: Temperatuur
+                    font_size_header: 12
+                    line_color: var(--custom_graph_color_1)
+                - !include
+                  - ../includes/graphs_popup.yaml
+                  - entity: sensor.kitchen_humidity
+                    name: Luchtvochtigheid
+                    font_size_header: 12
+                    line_color: var(--custom_graph_color_3)
+
+            - type: markdown
+              style: !include ../includes/titles_popup.yaml
+              content: Verlichting & Beweging
+            
+            - type: entities
+              style: !include ../includes/style_entities_popup.yaml
+              entities:
+              - entity: light.kitchen_ceiling_light
+                name: Keuken
+                secondary_info: last-changed  
+              # - entity: binary_sensor.cooking
+              #   name: Koken
+              #   secondary_info: last-changed  
+              - entity: light.utility_room_ceiling_light
+                name: Bijkeuken
+                secondary_info: last-changed  
+              - entity: binary_sensor.kitchen_pantry_doorsensor_contact
+                name: Kelderkast
+                secondary_info: last-changed  
+            
+            - type: markdown
+              style: !include ../includes/titles_popup.yaml
+              content: Apparaten
+
+            - type: entities
+              style: !include ../includes/style_entities_popup.yaml
+              entities:
+              - entity: sensor.oven_state
+                secondary_info: last-changed
+              - entity: sensor.washingmachine_state
+                secondary_info: last-changed
+              - type: "custom:secondaryinfo-entity-row"
+                entity: binary_sensor.fridge_status
+                icon: mdi:fridge
+                secondary_info: "Temperatuur: [[ sensor.fridge_temperature_mean ]]°C"
+        - type: horizontal-stack
+          cards:
+            - !include
+              - ../includes/graphs_popup.yaml
+              - entity: sensor.washingmachine_usage_cost
+                name: Wasmachine/Koelkast
+                aggregate_func: max
+                hours_to_show: 168
+                group_by: date
+                graph: bar
+                font_size_header: 12
+                line_color: var(--custom_graph_color_2)
+            - !include
+              - ../includes/graphs_popup.yaml
+              - entity: sensor.oven_usage_cost
+                name: Oven
+                aggregate_func: max
+                hours_to_show: 168
+                group_by: date
+                graph: bar
+                font_size_header: 12
+                line_color: var(--custom_graph_color_4)
+
+  group.master_bedroom_lights_all:
+    title: Slaapkamer
+    large: true
+    card:
+      type: custom:layout-card
+      layout: horizontal
+      max_columns: 2
+      style: !include ../includes/style_entities_popup.yaml
+      cards:
+        - type: vertical-stack
+          cards:
+            - type: entities
+              style: !include ../includes/style_entities_popup.yaml
+              entities:
+              - type: custom:mini-media-player
+                entity: media_player.lenovo_smartclock
+                icon: mdi:alarm
+                name: Wekker
+                artwork: cover
+                hide:
+                  power: false
+                  icon: true
+                  source: true
+                  controls: false
+                  progress: true
+                # tts: 
+                #   platform: ga
+                #   type: announce
+                shortcuts:
+                  columns: 4 # Max buttons per row
+                  buttons:
+                    - icon: mdi:radio
+                      type: script
+                      id: script.radio_play
+                    - icon: mdi:sleep
+                      type: script
+                      id: script.broadcast_sleep
+                    - icon: mdi:sleep-off
+                      type: script
+                      id: script.broadcast_wakeup
+                hide_volume: false
+                # show_progress: false
+                power_color: true
+                group: true 
+            
+            - type: vertical-stack
+              cards:
+              - type: horizontal-stack
+                cards:
+                  - !include
+                    - ../includes/graphs_popup.yaml
+                    - entity: sensor.master_bedroom_temperature
+                      name: Temperatuur
+                      font_size_header: 12
+                      line_color: var(--custom_graph_color_1)
+                  - !include
+                    - ../includes/graphs_popup.yaml
+                    - entity: sensor.master_bedroom_humidity
+                      name: Luchtvochtigheid
+                      font_size_header: 12
+                      line_color: var(--custom_graph_color_3)
+
+              - type: markdown
+                style: !include ../includes/titles_popup.yaml
+                content: Verlichting
+
+              - type: entities
+                style: !include ../includes/style_entities_popup.yaml
+                entities:
+                  - entity: group.master_bedroom_accent_lights
+                    name: Accent Verlichting
+                    icon: mdi:lightbulb-group
+                    secondary_info: last-changed
+                  - entity: light.master_bedroom_ceiling_light
+                    name: Platfond Lamp
+                    secondary_info: last-changed
+                  - entity: fan.master_bedroom_fan
+                    name: Ventilator
+                    secondary_info: last-changed  
+        - type: vertical-stack
+          cards:
+            - type: entities
+              style: !include ../includes/style_entities_popup.yaml
+              entities:
+              - type: 'custom:time-picker-card'
+                entity: input_datetime.alarm_clock_time
+  switch.3d_printer_relay:
+    title: 3D Printer
+    large: true
+    card:
+      type: custom:layout-card
+      layout: horizontal
+      max_columns: 2
+      style: !include ../includes/style_entities_popup.yaml
+      cards:
+        - type: vertical-stack
+          cards:
+            - type: entities
+              style: !include ../includes/style_entities_popup.yaml
+              entities:
+                - entity: switch.3d_printer_relay
+                  name: 3D Printer Aan/Uit
+                  secondary_info: last-changed
+            - type: horizontal-stack
+              cards:
+                - !include
+                  - ../includes/graphs_popup.yaml
+                  - entity: sensor.creality_ender_5_actual_bed_temp
+                    name: Bed
+                    font_size_header: 12
+                    hours_to_show: 1
+                    line_color: var(--custom_graph_color_1)
+                - !include
+                  - ../includes/graphs_popup.yaml
+                  - entity: sensor.creality_ender_5_actual_tool0_temp
+                    name: Extruder
+                    font_size_header: 12
+                    hours_to_show: 1
+                    line_color: var(--custom_graph_color_3)
+                - !include
+                  - ../includes/graphs_popup.yaml
+                  - entity: sensor.3d_printer_usage_cost
+                    name: Energie
+                    aggregate_func: max
+                    hours_to_show: 168
+                    group_by: date
+                    graph: bar
+                    font_size_header: 12
+                    line_color: var(--custom_graph_color_4)
+            - type: markdown
+              style: !include ../includes/titles_popup.yaml
+              content: Details
+            - type: entities
+              style: !include ../includes/style_entities_popup.yaml
+              entities:
+                - entity: sensor.creality_ender_5_current_state
+                  name: Print Status
+                - entity: sensor.creality_ender_5_job_percentage
+                  name: Percentage
+                - entity: sensor.creality_ender_5_time_elapsed
+                  name: Verstreken Tijd
+                - entity: sensor.creality_ender_5_time_remaining 
+                  name: Reseterende Tijd  
+        - type: picture-glance
+          entities: []
+          camera_image: camera.octoprint
+          camera_view: live
+          # title: "3d Printer"        
+
+  sensor.doorbell_history:
+    title: Deurbel / Voordeur
+    large: true
+    card:
+      type: custom:layout-card
+      layout: horizontal
+      max_columns: 2
+      style: !include ../includes/style_entities_popup.yaml
+      cards:
+        - type: vertical-stack
+          style: !include ../includes/style_entities_popup.yaml
+          cards:
+            - !include
+              - ../includes/graphs_popup.yaml
+              - entity: sensor.doorbell_history
+                name: Deurbel (afgelopen 2 weken)
+                aggregate_func: max
+                hours_to_show: 336
+                group_by: date
+                graph: bar
+                font_size_header: 12
+                line_color: var(--custom_graph_color_4)
+            - type: markdown
+              style: !include ../includes/titles_popup.yaml
+              content: Sensoren & Verlichting
+            - type: entities
+              show_header_toggle: false
+              style: !include ../includes/style_entities_popup.yaml
+              entities:
+                - entity: binary_sensor.front_door_doorsensor_contact
+                  name: Voordeur
+                  secondary_info: last-changed  
+                # - entity: binary_sensor.side_door
+                #   name: Zijdeur
+                #   secondary_info: last-changed  
+                - entity: sensor.doorbell_history
+                  name: Deurbel
+                  icon: 'mdi:alarm-bell'
+                  secondary_info: last-changed
+                - entity: switch.doorbell_chime_active
+                  name: Bel Actief
+                  icon: 'mdi:bell-ring'
+            - type: entities
+              show_header_toggle: false
+              style: !include ../includes/style_entities_popup.yaml
+              entities:
+                - entity: group.porch_lights
+                  name: Voordeur Verlichting
+                  icon: mdi:lightbulb
+                - entity: group.hallway_lights
+                  name: Hal Verlichting
+                  icon: mdi:lightbulb-multiple
+        - type: picture-glance
+          # image:
+          camera_image: camera.front_door_camera
+          # title: "Camera"
+          camera_view: live
+          hour24: true
+          entities: []
+theme: default
+cards:
+  - type: vertical-stack
+    cards:
+    - type: markdown
+      style: !include ../includes/titles.yaml
+      content: Quick Links en Informatie
+
+    ## SHORTCUTS ##        
+    - type: horizontal-stack
+      cards:
+        - type: "custom:button-card"
+          template: dash_button
+          entity: input_boolean.guest_mode
+        - type: "custom:button-card"
+          template: dash_button
+          icon: mdi:television
+          tap_action:
+            action: call-service
+            service: media_player.toggle
+            service_data:
+              entity_id: media_player.livingroom_tv
+          entity: media_player.livingroom_tv
+        - type: "custom:button-card"
+          template: dash_button
+          icon: mdi:printer-3d-nozzle
+          entity: switch.3d_printer_relay
+          name: 3D Printer
+        - type: "custom:button-card"
+          template: dash_button
+          entity: alarm_control_panel.alarm
+          show_name: true
+          show_state: true
+        - type: "custom:button-card"
+          template: dash_button
+          show_name: true
+          show_state: true
+          entity: sensor.doorbell_history
+          name: Deurbel
+          icon: 'mdi:alarm-bell'
+          secondary_info: last-changed
+
+    - type: horizontal-stack
+      style: !include ../includes/style.yaml 
+      cards:
+      - type: custom:vertical-stack-in-card
+        cards:
+        - type: horizontal-stack
+          cards:
+            ## BOUKE PERSON STATUS ##
+            - type: custom:button-card
+              template: people_state
+              entity: person.bouke
+              # entity_picture: /local/presence/bouke.jpg
+            - type: vertical-stack
+              cards:                                             
+                ## BOUKE BATTERY ##
+                - type: custom:button-card
+                  # template: people_button
+                  layout: icon_state
+                  entity: sensor.bouke_battery_level
+                  show_icon: true
+                  show_name: false
+                  show_state: true
+                - type: custom:button-card
+                  # template: people_button
+                  layout: icon_state
+                  entity: proximity.home_bouke
+                  show_icon: true
+                  show_name: false
+                  show_state: true
+                - type: custom:button-card
+                  # template: people_button
+                  entity: person.bouke
+                  show_icon: false
+                  show_name: false
+                  show_state: false
+                  show_last_changed: true
+      - type: custom:vertical-stack-in-card
+        cards:
+        - type: horizontal-stack
+          cards:
+            ## LOES PERSON STATUS ##
+            - type: custom:button-card
+              template: people_state
+              entity: person.loes
+              # entity_picture: /local/presence/loes.jpg
+            - type: vertical-stack
+              cards:                                             
+                ## LOES BATTERY ##
+                - type: custom:button-card
+                  # template: people_button
+                  layout: icon_state
+                  entity: sensor.loes_battery_level
+                  show_icon: true
+                  show_name: false
+                  show_state: true
+                - type: custom:button-card
+                  # template: people_button
+                  layout: icon_state
+                  entity: proximity.home_loes
+                  show_icon: true
+                  show_name: false
+                  show_state: true
+                ## LOES LAST CHANGED ##
+                - type: custom:button-card
+                  # template: people_button
+                  entity: person.loes
+                  show_icon: false
+                  show_name: false
+                  show_state: false
+                  show_last_changed: true
+
+    - type: custom:simple-weather-card
+      entity: weather.dark_sky
+      name: in Enschede
+      backdrop:
+        fade: true
+
+    - type: conditional
+      conditions:
+        - entity: media_player.livingroom_tv
+          state_not: "off"
+      card:
+        type: custom:mini-media-player
+        entity: media_player.livingroom_tv
+        icon: mdi:monitor-speaker
+        name: Sonos Muziek/TV
+        artwork: cover
+        show_progress: true  
+        hide:
+          # power: true
+          icon: true
+          source: true
+        tts: 
+          platform: sonos
+          type: tts
+          volume: 0.5
+        shortcuts:
+          columns: 2 # Max buttons per row
+          buttons:
+            # Start predefined playlist
+            - name: TV Uit
+              icon: mdi:television-off
+              type: service
+              id: media_player.toggle
+              data: {"entity_id": "media_player.livingroom_tv"}
+            - name: Film Modus
+              icon: mdi:brightness-6
+              type: script
+              id: script.scene_movies
+
+    - type: conditional
+      conditions:
+        - entity: media_player.livingroom_tv
+          state: "off"
+      card:
+        type: custom:mini-media-player
+        entity: media_player.sonos_livingroom
+        icon: mdi:monitor-speaker
+        name: Sonos Muziek/TV
+        artwork: cover
+        show_progress: true  
+        hide:
+          power: true
+          icon: true
+          source: true
+        tts: 
+          platform: sonos
+          type: tts
+          volume: 0.5
+        shortcuts:
+          columns: 2 # Max buttons per row
+          buttons:
+            # Start predefined playlist
+            - name: TV Aan
+              icon: mdi:television
+              type: service
+              id: media_player.toggle
+              data: {"entity_id": "media_player.livingroom_tv"}
+            - name: Platenspeler
+              icon: mdi:record-player
+              type: source
+              id: Record Player
+              data: {"entity_id": "media_player.livingroom_tv"}
+        sonos:
+          sync_volume: false
+          show_group_count: true
+          entities: !include ../includes/sonos_groups.yaml
+      # hide:
+      #   power: false
+      #   source: true
+      #   controls: true
+      #   volume: false
+      #   power_state: false
+      # hide_volume: true
+      # show_progress: false
+      
+      # group: true
+
+    - type: horizontal-stack
+      cards:
+        - !include
+          - ../includes/dash_plants.yaml
+          - plant: plant.plant_dracaena
+            name: Dracaena
+            icon: mdi:silverware-fork-knife
+            moisture: sensor.plant_dracaena_moisture
+            temperature: sensor.plant_dracaena_temperature
+            conductivity: sensor.plant_dracaena_conductivity
+            brightness: sensor.plant_dracaena_light_intensity 
+        - !include
+          - ../includes/dash_plants.yaml
+          - plant: plant.plant_jade
+            name: Jade Plant
+            icon: mdi:silverware-fork-knife
+            moisture: sensor.plant_jade_moisture
+            temperature: sensor.plant_jade_temperature
+            conductivity: sensor.plant_jade_conductivity
+            brightness: sensor.plant_jade_light_intensity 
+        - !include
+          - ../includes/dash_plants.yaml
+          - plant: plant.plant_musa
+            name: Bananenplant
+            icon: mdi:silverware-fork-knife
+            moisture: sensor.plant_musa_moisture
+            temperature: sensor.plant_musa_temperature
+            conductivity: sensor.plant_musa_conductivity
+            brightness: sensor.plant_musa_light_intensity 
+
+  - type: vertical-stack
+    cards:
+    - type: markdown
+      style: !include ../includes/titles.yaml
+      content: Verlichting en Kamers
+
+    - type: horizontal-stack
+      cards:
+        - !include
+          - ../includes/dash_lights.yaml
+          - light: group.livingroom_lights
+            name: Woonkamer
+            icon: mdi:sofa
+            temperature: sensor.downstairs_thermostat_temperature
+            motion_sensor: binary_sensor.livingroom_bodysensor_group_occupancy
+            media_player: media_player.livingroom_media
+        - !include
+          - ../includes/dash_lights.yaml
+          - light: group.kitchen_lights
+            name: Keuken
+            icon: mdi:silverware-fork-knife
+            temperature: sensor.kitchen_temperature
+            motion_sensor: binary_sensor.kitchen_group_occupancy
+            media_player: media_player.sonos_kitchen
+        - !include
+          - ../includes/dash_lights.yaml
+          - light: group.master_bedroom_lights_all
+            name: Slaapkamer
+            icon: mdi:bed-king
+            temperature: sensor.master_bedroom_temperature 
+            motion_sensor: binary_sensor.master_bedroom_bodysensor_1_occupancy
+            media_player: media_player.lenovo_smartclock
+        - !include
+          - ../includes/dash_lights.yaml
+          - light: light.guest_bedroom_ceiling_light
+            name: Logeerkamer
+            icon: mdi:rabbit
+            temperature: sensor.guest_bedroom_tempsensor_temperature
+            motion_sensor: binary_sensor.guest_bedroom_bodysensor_1_occupancy
+            media_player: media_player.google_home_spare_bedroom
+        - !include
+          - ../includes/dash_lights.yaml
+          - light: group.study_lights
+            name: Studeerkamer
+            icon: mdi:desktop-tower-monitor
+            temperature: sensor.study_tempsensor_temperature
+            motion_sensor: binary_sensor.study_bodysensor_group_occupancy
+            media_player: media_player.sonos_study
+
+    - type: markdown
+      style: !include ../includes/titles.yaml
+      content: Sensoren
+
+    - type: horizontal-stack
+      cards:
+        - !include
+          - ../includes/graphs.yaml
+          - entity: sensor.downstairs_thermostat_temperature
+            name: Temperatuur
+            # extrema: true
+            points_per_hour: 1
+            line_color: var(--custom_graph_color_1)
+        - !include
+          - ../includes/graphs.yaml
+          - entity: sensor.indoor_illuminance
+            icon: mdi:white-balance-sunny
+            name: Lichtsterkte
+            # extrema: true
+            points_per_hour: 1
+            line_color: var(--custom_graph_color_2)
+        - !include
+          - ../includes/graphs.yaml
+          - entity: sensor.downstairs_thermostat_humidity
+            name: Luchtvochtigheid
+            # extrema: true
+            points_per_hour: 1
+            line_color: var(--custom_graph_color_3)
+
+    - type: markdown
+      style: !include ../includes/titles.yaml
+      content: Cameras
+
+    - type: picture-glance
+      # image:
+      camera_image: camera.front_door_camera
+      # title: "Camera"
+      camera_view: live
+      hour24: true
+      entities: []
+        # - group.porch_lights
+        # - binary_sensor.porch_bodysensor_cam_occupancy
+
+    - type: picture-glance
+      camera_image: camera.rabbit_camera
+      camera_view: live
+      # title: "Konijnen"
+      entities: []
+        # - binary_sensor.guest_bedroom_bodysensor_cam_occupancy
+        # - light.guest_bedroom_ceiling_light
+
+    - type: picture-glance
+      # image:
+      camera_image: camera.study_camera
+      # title: "Camera"
+      camera_view: live
+      entities:
+        - entity: switch.camera_study_control_up
+          icon: mdi:chevron-up-box-outline
+        - entity: switch.camera_study_control_down
+          icon: mdi:chevron-down-box-outline
+        - entity: switch.camera_study_control_left
+          icon: mdi:chevron-left-box-outline
+        - entity: switch.camera_study_control_right
+          icon: mdi:chevron-right-box-outline
+        # - binary_sensor.study_bodysensor_cam_occupancy
+
+    # ## Rooms ##        
+    # - type: horizontal-stack
+    #   cards:
+    #     - !include
+    #       - ../includes/dash_lights.yaml
+    #       - light: light.flur
+    #         icon: mdi:broom
+    #         motion_sensor: binary_sensor.bewegungsmelder_flur_motion
+    #         motion_sensor_toggle: input_boolean.motion_sensor_flur_toggle
+    #         media_player: light.flur
+    #         motion_sensor_timer: timer.bewegungsmelder_flur
+    #     - type: "custom:button-card"
+    #       template: dash_lights
+    #       entity: input_boolean.guest_mode
+    #     - type: "custom:button-card"
+    #       template: dash_lights
+    #       entity: alarm_control_panel.alarm
+    #       show_name: false
+    #       show_state: true
+    # 

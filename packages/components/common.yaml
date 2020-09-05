@@ -1,0 +1,17 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      common: &common
+        package: "commons"
+    # ---
+    # Localization
+    script.restart_hass:
+      friendly_name: Herstart Home Assistant
+      icon: mdi:restart
+      <<: *common
+
+script:
+  restart_hass:
+    alias: Restart HASS
+    sequence:
+      service: homeassistant.restart

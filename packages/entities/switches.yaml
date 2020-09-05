@@ -1,0 +1,15 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      common: &common
+        package: "switches"
+
+    input_boolean.guest_mode:
+      friendly_name: Gasten Modus
+      <<: *common
+
+input_boolean:
+  guest_mode:
+    name: Guest Mode
+    initial: off
+    icon: mdi:account

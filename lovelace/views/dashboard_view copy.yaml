@@ -1,0 +1,577 @@
+title: Home
+icon: mdi:heart
+badges: []
+theme: default
+cards:
+  - type: custom:auto-entities
+    show_empty: false
+    card:
+      type: glance
+      title: Batterij Waarschuwing
+    filter:
+      include:
+        - entity_id: "sensor.*_battery"
+          state: "<= 15"
+
+  - type: custom:alarm_control_panel-card
+    entity: alarm_control_panel.alarm
+    title: Alarm
+    show_keypad: false
+    labels:
+      ui.card.alarm_control_panel.arm_away: Afwezig
+      ui.card.alarm_control_panel.arm_night: Nacht
+    states: 
+      - arm_away
+      - arm_night
+
+  - type: custom:simple-weather-card
+    entity: weather.dark_sky
+    name: in Enschede
+    backdrop:
+      fade: true
+
+  # Woonkamer
+  - type: 'custom:simple-thermostat'
+    entity: climate.downstairs
+    name: Thermostaat
+    step_size: 0.5
+    hide: 
+      temperature: true
+      state: true
+    sensors:
+      - entity: sensor.downstairs_thermostat_temperature
+        name: Woonkamer
+      - entity: sensor.kitchen_temperature
+        name: Keuken
+      # - attribute: min_temp
+      #   name: Min temp
+    control:
+      hvac: 
+        'off': false
+        'heat': false
+      preset:
+        'none':
+          name: false
+          icon: mdi:fire
+        'away':
+          name: false
+          icon: mdi:account-off
+        'eco':
+          name: false
+          icon: mdi:earth
+        'Away and Eco': false
+  - type: custom:vertical-stack-in-card
+    title: Woonkamer
+    cards:
+      - type: entities
+        entities:
+        # - type: 'custom:simple-thermostat'
+        #   entity: climate.downstairs
+          # step_size: 0.5
+          # sensors:
+          #   - entity: sensor.fibaro_system_fgwpef_wall_plug_gen5_energy
+          #   - entity: sensor.fibaro_system_fgwpef_wall_plug_gen5_power
+          #     name: Energy today
+          #   - attribute: min_temp
+          #     name: Min temp
+          # control:
+            # hvac:
+          # some_mode: false
+          #   another_mode: false
+          #     'off':
+          #       name: Make it cold
+          #     icon: false
+          #     'on':
+          #       name: false
+          #       icon: mdi:whitewalker
+
+        - type: thermostat
+          entity: climate.downstairs
+        - type: custom:secondaryinfo-entity-row
+          entity: sensor.livingroom_iaq
+          secondary_info: "CO2: [[ sensor.livingroom_co2.state ]]ppm"
+        - type: group
+          entity: group.livingroom_lights
+          name: Verlichting
+          secondary_info: last-changed  
+        - type: custom:rgb-light-card
+          colors:
+          # First icon calls a script
+          - type: script
+            entity_id: script.scene_default
+            icon_color: 'linear-gradient(25deg, #FFC970, #FFDFAB)'
+          - type: script
+            entity_id: script.scene_bright
+            icon_color: 'linear-gradient(25deg, #FFD68B, #FFEDCC)'
+          # Second icon calls a scene
+          - type: script
+            entity_id: script.scene_romantic
+            icon_color: 'linear-gradient(25deg, #98364E, #FFC668)'
+          - type: script
+            entity_id: script.scene_candy
+            icon_color: 'linear-gradient(25deg, #F694C1, #A9DEF9)'
+          # - type: script
+          #   entity_id: script.scene_sea
+          #   icon_color: 'linear-gradient(25deg, #00FFFE, #FFC668)'
+          - type: script
+            entity_id: script.scene_movies
+            icon_color: 'linear-gradient(25deg, #B6DAFF, #FFEBB6)'
+          # - type: scene
+          #   entity_id: scene.livingroom_off
+          #   icon_color: 'linear-gradient(25deg, #FFFFFF, #FAFAFA)'
+        - entity: light.christmas_tree
+          name: Kerstboom
+          icon: mdi:pine-tree
+        # - type: input_select
+        #   entity: input_select.living_room_lighting_mode
+        # - type: binary_sensor
+        #   entity: binary_sensor.livingroom_occupancy
+        #   name: Beweging
+        #   secondary_info: last-changed  
+        # - type: custom:mini-media-player
+        #   entity: media_player.livingroom_tv
+        #   icon: mdi:television
+        #   name: Tv
+        #   artwork: cover
+        #   show_progress: true  
+        #   hide:
+        #     power: false
+        #     icon: true
+        #     source: true
+        #   # hide:
+        #   #   power: false
+        #   #   source: true
+        #   #   controls: true
+        #   #   volume: false
+        #   #   power_state: false
+        #   # hide_volume: true
+        #   # show_progress: false
+        #   group: true
+        - type: custom:mini-media-player
+          entity: media_player.livingroom_media
+          icon: mdi:television
+          name: Sonos TV/Muziek
+          artwork: cover
+          show_progress: true  
+          hide:
+            power: true
+            icon: true
+            source: true
+          tts: 
+            platform: ga
+            type: announce
+          shortcuts:
+            columns: 2 # Max buttons per row
+            buttons:
+              # Start predefined playlist
+              - name: TV Aan/Uit
+                icon: mdi:television-box
+                type: service
+                id: media_player.toggle
+                data: {"entity_id": "media_player.livingroom_tv"}
+          # hide:
+          #   power: false
+          #   source: true
+          #   controls: true
+          #   volume: false
+          #   power_state: false
+          # hide_volume: true
+          # show_progress: false
+          sonos:
+            sync_volume: false
+            show_group_count: true
+            entities: !include ../includes/sonos_groups.yaml
+          group: true
+        # - type: custom:mini-media-player
+        #   entity: media_player.sonos_livingroom
+        #   name: Sonos Woonkamer
+        #   artwork: cover
+        #   show_progress: true  
+        #   hide:
+        #     power: true
+        #     icon: true
+        #     source: true
+        #     # shuffle: false
+        #   tts: 
+        #     platform: ga
+        #     type: announce
+        #   # language: nl
+        #   sonos:
+        #     sync_volume: false
+        #     show_group_count: true
+        #     entities: !include ../sonos_groups.yaml
+        #   group: true
+
+  # - type: entities
+  #   title: Overig
+  #   show_header_toggle: false
+  #   entities:
+      
+  # Keuken
+  - type: entities
+    title: Keuken/Bijkeuken
+    show_header_toggle: false
+    entities:
+    - type: custom:secondaryinfo-entity-row
+      entity: sensor.kitchen_temperature
+      name: Temperatuur
+      secondary_info: "Luchtvochtigheid: [[ sensor.kitchen_humidity ]]%"
+    - type: custom:mini-media-player
+      entity: media_player.sonos_kitchen
+      name: Sonos Keuken
+      artwork: cover
+      show_progress: true  
+      hide:
+        power: true
+        icon: true
+        source: true
+        # shuffle: false
+      tts: 
+        platform: ga
+        type: announce
+      # language: nl
+      sonos:
+        sync_volume: false
+        show_group_count: true
+        entities: !include ../includes/sonos_groups.yaml
+      group: true
+    # - type: custom:mini-media-player
+    #   entity: media_player.sonos_kitchen
+    #   icon: mdi:speaker
+    #   name: Sonos
+    #   artwork: cover
+    #   hide:
+    #     power: false
+    #     icon: true
+    #     source: true
+    #     controls: false
+    #     progress: true
+    #   power_color: true
+    #   # tts: 
+    #   #   platform: ga
+    #   #   type: announce
+    #   # hide_volume: true
+    #   # show_progress: true
+    #   group: true  
+    - entity: light.kitchen_ceiling_light
+      name: Keuken
+      secondary_info: last-changed  
+    - entity: binary_sensor.cooking
+      name: Koken
+      secondary_info: last-changed  
+    - entity: light.utility_room_ceiling_light
+      name: Bijkeuken
+      secondary_info: last-changed  
+    - entity: binary_sensor.kitchen_pantry_doorsensor_contact
+      name: Kelderkast
+      secondary_info: last-changed  
+    - type: sensor
+      entity: sensor.oven_state
+      secondary_info: last-changed
+    - type: sensor
+      entity: sensor.washingmachine_state
+      secondary_info: last-changed
+    - type: "custom:secondaryinfo-entity-row"
+      entity: binary_sensor.fridge_status
+      icon: mdi:fridge
+      secondary_info: "Temperatuur: [[ sensor.fridge_temperature_mean ]]°C"
+
+  - type: custom:vertical-stack-in-card
+    cards:
+    - type: entities
+      entities:
+        - type: custom:secondaryinfo-entity-row
+          entity: sensor.indoor_illuminance
+          icon: mdi:white-balance-sunny
+          name: Lichtsterkte
+          secondary_info: "Onder: [[ sensor.sunset_time ]]"
+        - type: custom:secondaryinfo-entity-row
+          entity: sensor.ba_precipitation
+          icon: mdi:weather-pouring
+          name: Regen
+          # secondary_info: "Zonsondergang: [[ sensor.sunset_time ]]"
+  # - type: glance
+  #   title: Glance card sample
+  #   entities:
+  #     - entity: binary_sensor.presence_trackr_bouke_keys
+  #       icon: 'mdi:key-variant'
+  #       secondary_info: last-changed  
+  #     - entity: binary_sensor.presence_trackr_bouke_backpack
+  #       secondary_info: last-changed  
+  #     - entity: binary_sensor.presence_trackr_loes_keys
+  #       icon: 'mdi:key-variant'
+  #       secondary_info: last-changed  
+
+
+
+  - type: entities
+    # title: Voordeur
+    show_header_toggle: false
+    entities:
+    - entity: binary_sensor.front_door_doorsensor_contact
+      name: Voordeur
+      secondary_info: last-changed  
+    # - entity: binary_sensor.side_door
+    #   name: Zijdeur
+    #   secondary_info: last-changed  
+    - entity: sensor.doorbell_history
+      name: Deurbel
+      icon: 'mdi:alarm-bell'
+      secondary_info: last-changed
+    - entity: switch.doorbell_chime_active
+      name: Bel Actief
+      icon: 'mdi:bell-ring'
+    - entity: group.porch_lights
+      name: Voordeur Verlichting
+    - entity: group.hallway_lights
+      name: Hal Verlichting
+    # - entity: light.porch_light
+    #   name: Lamp
+    #   type: custom:slider-entity-row
+  - type: picture-glance
+    camera_image: camera.front_door_camera
+    camera_view: live
+    title: "Camera"
+    entities:
+      - group.porch_lights
+      - binary_sensor.porch_bodysensor_cam_occupancy
+  - type: entities
+    title: Achtertuin
+    show_header_toggle: false
+    entities:
+    - entity: binary_sensor.livingroom_doorsensor_2_contact
+      name: Schuifdeur
+      secondary_info: last-changed  
+    - entity: light.garden_string_light
+      name: Buiten Lampjes
+
+  # - type: custom:vertical-stack-in-card
+  #   cards:
+  - type: custom:flower-card
+    entity: plant.plant_dracaena
+    species: "dracaena marginata"
+  
+  - type: entities
+    title: Planten
+    show_header_toggle: false
+    entities:
+      - type: sensor
+        entity: plant.plant_musa
+        name: Bananenplant
+        # primary_info: >-
+        #   Water: [[ attributes.moisture ]]%
+        # secondary_info: >-
+        #   [[ attributes.problem ]]
+      - type: sensor
+        entity: plant.plant_dracaena
+        name: Drakenbloedboom
+        # primary_info: >-
+        #   Water: [[ attributes.moisture ]]%
+        # secondary_info: >-
+        #   [[ attributes.problem ]]
+      - type: sensor
+        entity: plant.plant_jade
+        name: Jade Plant
+        # primary_info: >-
+        #   Water: [[ attributes.moisture ]]%
+        # secondary_info: >-
+        #   [[ attributes.problem ]]
+
+  - type: custom:vertical-stack-in-card
+    title: Logeerkamer
+    cards:
+    - type: entities
+      # title: Logeerkamer
+      show_header_toggle: false
+      entities:
+      - type: custom:secondaryinfo-entity-row
+        entity: sensor.guest_bedroom_tempsensor_temperature
+        name: Temperatuur
+        secondary_info: "Luchtvochtigheid: [[ sensor.guest_bedroom_tempsensor_humidity ]]%"
+      - entity: light.guest_bedroom_ceiling_light
+        name: Plafondlamp
+        secondary_info: last-changed
+      - entity: group.mirror_light
+        name: Spiegel
+        secondary_info: last-changed
+      - entity: input_boolean.guest_mode
+        name: Gasten Modus
+    - type: picture-glance
+      camera_image: camera.rabbit_camera
+      camera_view: live
+      title: "Konijnen"
+      entities:
+        - binary_sensor.guest_bedroom_bodysensor_cam_occupancy
+        - light.guest_bedroom_ceiling_light
+  - type: entities
+    title: Badkamer
+    show_header_toggle: false
+    entities:
+    - type: custom:secondaryinfo-entity-row
+      entity: sensor.bathroom_tempsensor_temperature
+      secondary_info: "Luchtvochtigheid: [[ sensor.bathroom_tempsensor_humidity ]]%"
+      name: Temperatuur
+  - type: entities
+    title: Slaapkamer
+    show_header_toggle: false
+    entities:
+    - type: custom:secondaryinfo-entity-row
+      entity: sensor.master_bedroom_temperature
+      secondary_info: "Luchtvochtigheid: [[ sensor.master_bedroom_humidity ]]%"
+      name: Temperatuur
+    # - type: sensor
+    #   entity: sensor.master_bedroom_humidity
+    #   name: Luchtvochtigheid
+    - type: custom:secondaryinfo-entity-row
+      entity: sensor.master_bedroom_iaq
+      secondary_info: "CO2: [[ sensor.master_bedroom_eco2.state ]]ppm"
+    - type: group
+      entity: group.master_bedroom_lights
+      name: Verlichting
+      secondary_info: last-changed  
+    # - entity: script.radio_play
+    #   name: Speel Radio
+    - entity: binary_sensor.sleeping
+      name: Slapen
+      secondary_info: last-changed  
+    - entity: input_select.radio_station
+      # name: Radio Station
+    - type: custom:mini-media-player
+      entity: media_player.lenovo_smartclock
+      icon: mdi:alarm
+      name: Wekker
+      artwork: cover
+      hide:
+        power: false
+        icon: true
+        source: true
+        controls: false
+        progress: true
+      # tts: 
+      #   platform: ga
+      #   type: announce
+      shortcuts:
+        columns: 4 # Max buttons per row
+        buttons:
+          - icon: mdi:radio
+            type: script
+            id: script.radio_play
+          - icon: mdi:sleep
+            type: script
+            id: script.broadcast_sleep
+          - icon: mdi:sleep-off
+            type: script
+            id: script.broadcast_wakeup
+      hide_volume: false
+      # show_progress: false
+      power_color: true
+      group: true  
+
+        
+  # - type: horizontal-stack
+  #   title: Familie
+  #   cards:
+  #     - type: glance
+  #       columns: 2
+  #       entities:
+  #         - device_tracker.iphone_user1
+  #         - input_text.reminder_user1
+  #       show_name: false
+  #     - type: glance
+  #       columns: 2
+  #       entities:
+  #         - device_tracker.iphone_user2
+  #         - input_text.reminder_user2
+  #       show_name: false
+  
+
+      #   - type: custom:mini-media-player
+      #     entity: media_player.living_room_tv
+      #     name: Philips TV
+      #     artwork: cover
+      #     power_color: true
+      #     volume_stateless: true
+      #     hide_controls: true
+      #     icon: 'mdi:television'
+      #     group: true
+      #     # hide_volume: true
+      #     # show_progress: true
+  # - type: custom:popup-card
+  #   entity: light.bed_light
+  #   title: Bedside lamp settings
+  #   card:
+  #     type: entities
+  #     entities:
+  #       - light.bed_light
+  #       - type: custom:time-input-row
+  #         entity: input_datetime.on_time
+  #       - type: custom:time-input-row
+  #         entity: input_datetime.off_time
+  #       - input_boolean.weekdays_only
+
+  - type: custom:vertical-stack-in-card
+    cards:
+    - type: entities
+      title: Studeerkamer
+      show_header_toggle: false
+      entities:
+      - type: custom:secondaryinfo-entity-row
+        entity: sensor.study_tempsensor_temperature
+        name: Temperatuur
+        secondary_info: "Luchtvochtigheid: [[ sensor.study_tempsensor_humidity ]]%"
+      - entity: group.study_lights
+        name: Verlichting
+        icon: 'mdi:desk-lamp'
+      - entity: switch.study_fluorescent_light
+        name: TL-Lamp
+        icon: 'mdi:led-strip'
+      - type: custom:mini-media-player
+        entity: media_player.sonos_study
+        name: Sonos Studeerkamer
+        artwork: cover
+        show_progress: true  
+        hide:
+          power: true
+          icon: true
+          source: true
+          # shuffle: false
+        tts: 
+          platform: ga
+          type: announce
+        # language: nl
+        sonos:
+          sync_volume: false
+          show_group_count: true
+          entities: !include ../includes/sonos_groups.yaml
+        group: true
+
+      # - type: custom:mini-media-player
+      #   entity: media_player.study_bluetooth_receiver
+      #   icon: mdi:speaker-bluetooth
+      #   name: Bluetooth Speaker
+      #   hide:
+      #     power: false
+      #     source: true
+      #     controls: true
+      #     volume: true
+      #     power_state: false
+      #   hide_volume: true
+      #   show_progress: false
+      #   group: true  
+    - type: picture-glance
+      # image:
+      camera_image: camera.study_camera
+      title: "Camera"
+      camera_view: live
+      entities:
+        - entity: switch.camera_study_control_up
+          icon: mdi:chevron-up-box-outline
+        - entity: switch.camera_study_control_down
+          icon: mdi:chevron-down-box-outline
+        - entity: switch.camera_study_control_left
+          icon: mdi:chevron-left-box-outline
+        - entity: switch.camera_study_control_right
+          icon: mdi:chevron-right-box-outline
+        - binary_sensor.study_bodysensor_cam_occupancy
+
+  
